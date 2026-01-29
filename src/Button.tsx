@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "./utils";
 
 const buttonBase = cva(
-  "bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group inline-flex items-center justify-center overflow-hidden",
+  "bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group",
   {
     variants: {
       variant: {
@@ -28,8 +28,8 @@ const slideBase = cva(
         outline: "hidden",
       },
       direction: {
-        left: "left-1 group-hover:w-[184px]",
-        right: "right-1 group-hover:w-[184px] flex-row-reverse",
+        left: "left-1 w-1/4 group-hover:w-[184px]",
+        right: "right-1 w-1/4 group-hover:w-[184px] flex-row-reverse",
       },
     },
     defaultVariants: {
@@ -76,8 +76,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         <div
           className={cn(
             slideBase({ variant, direction }),
-            variant !== "outline" && slideColor,
-            "w-1/4" // starting width
+            variant !== "outline" && slideColor
           )}
         >
           <svg
@@ -98,10 +97,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           </svg>
         </div>
 
-        {/* Button text - moves slightly on hover */}
-        <p className="translate-x-2 group-hover:translate-x-0 transition-transform duration-300">
-          {children}
-        </p>
+        {/* Button text */}
+        <p className="translate-x-2">{children}</p>
       </button>
     );
   }
