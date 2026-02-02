@@ -1,21 +1,23 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'node:path';
+import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 
 export default defineConfig({
   plugins: [
     react(),
-    dts({ 
+    dts({
       insertTypesEntry: true,
-      rollupTypes: true 
-    })
+    }),
   ],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'Buttonix',
-      fileName: (format) => `index.${format === 'es' ? 'es' : 'umd'}.js`,
+      formats: ['es', 'umd'],
+      fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
       external: ['react', 'react-dom'],
@@ -25,6 +27,14 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
         },
       },
+    },
+  },
+  css: {
+    postcss: {
+      plugins: [
+        tailwindcss(),
+        autoprefixer(),
+      ],
     },
   },
 });

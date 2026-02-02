@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "./utils";
 
 const buttonBase = cva(
-  "bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group",
+  "text-center rounded-2xl h-14 relative text-black text-xl font-semibold group",
   {
     variants: {
       variant: {
@@ -11,9 +11,15 @@ const buttonBase = cva(
         destructive: "bg-white text-black",
         outline: "bg-transparent border-2 border-black text-black hover:bg-black/5",
       },
+      size: {
+        default: "w-48",
+        sm: "w-32",
+        lg: "w-64",
+      },
     },
     defaultVariants: {
       variant: "default",
+      size: "default",
     },
   }
 );
@@ -42,7 +48,7 @@ const slideBase = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonBase> {
-  color?: string;           // e.g. "bg-blue-500", "bg-purple-600"
+  color?: string;
   direction?: "left" | "right";
 }
 
@@ -58,12 +64,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    // Default slide color depending on variant
-    const slideColor =
-      color ||
-      (variant === "destructive" ? "bg-red-500" : "bg-green-400");
+    // Use inline styles for dynamic colors
+    const slideStyle = {
+      backgroundColor: color || (variant === "destructive" ? "#ef4444" : "#4ade80"),
+    };
 
-    // Flip icon for right direction
     const iconFlip = direction === "right" ? "scale-x-[-1]" : "";
 
     return (
@@ -72,12 +77,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
       >
-        {/* Sliding background + icon */}
         <div
-          className={cn(
-            slideBase({ variant, direction }),
-            variant !== "outline" && slideColor
-          )}
+          className={cn(slideBase({ variant, direction }))}
+          style={variant !== "outline" ? slideStyle : {}}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -96,8 +98,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             />
           </svg>
         </div>
-
-        {/* Button text */}
         <p className="translate-x-2">{children}</p>
       </button>
     );

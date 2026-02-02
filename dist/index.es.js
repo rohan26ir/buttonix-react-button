@@ -249,7 +249,7 @@ React keys must be passed directly to JSX without using spread:
     var O, q = {}, $ = R.react_stack_bottom_frame.bind(
       R,
       s
-    )(), S = G(n(s)), J = {};
+    )(), T = G(n(s)), J = {};
     D.Fragment = p, D.jsx = function(r, d, v) {
       var w = 1e4 > f.recentlyCreatedOwnerStacks++;
       return g(
@@ -258,7 +258,7 @@ React keys must be passed directly to JSX without using spread:
         v,
         !1,
         w ? Error("react-stack-top-frame") : $,
-        w ? G(n(r)) : S
+        w ? G(n(r)) : T
       );
     }, D.jsxs = function(r, d, v) {
       var w = 1e4 > f.recentlyCreatedOwnerStacks++;
@@ -268,7 +268,7 @@ React keys must be passed directly to JSX without using spread:
         v,
         !0,
         w ? Error("react-stack-top-frame") : $,
-        w ? G(n(r)) : S
+        w ? G(n(r)) : T
       );
     };
   }()), D;
@@ -317,7 +317,7 @@ const ue = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, pe = me, h
     ] : u;
   }, []);
   return pe(e, i, b, t == null ? void 0 : t.class, t == null ? void 0 : t.className);
-}, ie = "-", Te = (e) => {
+}, ie = "-", Se = (e) => {
   const o = je(e), {
     conflictingClassGroups: t,
     conflictingClassGroupModifiers: n
@@ -325,7 +325,7 @@ const ue = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, pe = me, h
   return {
     getClassGroupId: (i) => {
       const a = i.split(ie);
-      return a[0] === "" && a.length !== 1 && a.shift(), ve(a, o) || Se(i);
+      return a[0] === "" && a.length !== 1 && a.shift(), ve(a, o) || Te(i);
     },
     getConflictingClassGroupIds: (i, a) => {
       const b = t[i] || [];
@@ -345,7 +345,7 @@ const ue = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, pe = me, h
   return (i = o.validators.find(({
     validator: a
   }) => a(s))) == null ? void 0 : i.classGroupId;
-}, fe = /^\[(.+)\]$/, Se = (e) => {
+}, fe = /^\[(.+)\]$/, Te = (e) => {
   if (fe.test(e)) {
     const o = fe.exec(e)[1], t = o == null ? void 0 : o.substring(0, o.indexOf(":"));
     if (t)
@@ -463,7 +463,7 @@ const ue = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, pe = me, h
 }, Ie = (e) => ({
   cache: Ne(e.cacheSize),
   parseClassName: Oe(e),
-  ...Te(e)
+  ...Se(e)
 }), Ge = /\s+/, $e = (e, o) => {
   const {
     parseClassName: t,
@@ -537,7 +537,7 @@ function Le(e, ...o) {
 const m = (e) => {
   const o = (t) => t[e] || [];
   return o.isThemeGetter = !0, o;
-}, we = /^\[(?:([a-z-]+):)?(.+)\]$/i, We = /^\d+\/\d+$/, Ye = /* @__PURE__ */ new Set(["px", "full", "screen"]), Fe = /^(\d+(\.\d+)?)?(xs|sm|md|lg|xl)$/, Ue = /\d+(%|px|r?em|[sdl]?v([hwib]|min|max)|pt|pc|in|cm|mm|cap|ch|ex|r?lh|cq(w|h|i|b|min|max))|\b(calc|min|max|clamp)\(.+\)|^0$/, Be = /^(rgba?|hsla?|hwb|(ok)?(lab|lch))\(.+\)$/, qe = /^(inset_)?-?((\d+)?\.?(\d+)[a-z]+|0)_-?((\d+)?\.?(\d+)[a-z]+|0)/, Je = /^(url|image|image-set|cross-fade|element|(repeating-)?(linear|radial|conic)-gradient)\(.+\)$/, T = (e) => W(e) || Ye.has(e) || We.test(e), j = (e) => Y(e, "length", rr), W = (e) => !!e && !Number.isNaN(Number(e)), ne = (e) => Y(e, "number", W), H = (e) => !!e && Number.isInteger(Number(e)), Xe = (e) => e.endsWith("%") && W(e.slice(0, -1)), c = (e) => we.test(e), P = (e) => Fe.test(e), De = /* @__PURE__ */ new Set(["length", "size", "percentage"]), He = (e) => Y(e, De, ke), Ze = (e) => Y(e, "position", ke), Qe = /* @__PURE__ */ new Set(["image", "url"]), Ke = (e) => Y(e, Qe, or), er = (e) => Y(e, "", tr), Z = () => !0, Y = (e, o, t) => {
+}, we = /^\[(?:([a-z-]+):)?(.+)\]$/i, We = /^\d+\/\d+$/, Ye = /* @__PURE__ */ new Set(["px", "full", "screen"]), Fe = /^(\d+(\.\d+)?)?(xs|sm|md|lg|xl)$/, Ue = /\d+(%|px|r?em|[sdl]?v([hwib]|min|max)|pt|pc|in|cm|mm|cap|ch|ex|r?lh|cq(w|h|i|b|min|max))|\b(calc|min|max|clamp)\(.+\)|^0$/, Be = /^(rgba?|hsla?|hwb|(ok)?(lab|lch))\(.+\)$/, qe = /^(inset_)?-?((\d+)?\.?(\d+)[a-z]+|0)_-?((\d+)?\.?(\d+)[a-z]+|0)/, Je = /^(url|image|image-set|cross-fade|element|(repeating-)?(linear|radial|conic)-gradient)\(.+\)$/, S = (e) => W(e) || Ye.has(e) || We.test(e), j = (e) => Y(e, "length", rr), W = (e) => !!e && !Number.isNaN(Number(e)), ne = (e) => Y(e, "number", W), H = (e) => !!e && Number.isInteger(Number(e)), Xe = (e) => e.endsWith("%") && W(e.slice(0, -1)), c = (e) => we.test(e), P = (e) => Fe.test(e), De = /* @__PURE__ */ new Set(["length", "size", "percentage"]), He = (e) => Y(e, De, ke), Ze = (e) => Y(e, "position", ke), Qe = /* @__PURE__ */ new Set(["image", "url"]), Ke = (e) => Y(e, Qe, or), er = (e) => Y(e, "", tr), Z = () => !0, Y = (e, o, t) => {
   const n = we.exec(e);
   return n ? n[1] ? typeof o == "string" ? n[1] === o : o.has(n[1]) : t(n[2]) : !1;
 }, rr = (e) => (
@@ -546,13 +546,13 @@ const m = (e) => {
   // I could also use lookbehind assertion in `lengthUnitRegex` but that isn't supported widely enough.
   Ue.test(e) && !Be.test(e)
 ), ke = () => !1, tr = (e) => qe.test(e), or = (e) => Je.test(e), nr = () => {
-  const e = m("colors"), o = m("spacing"), t = m("blur"), n = m("brightness"), l = m("borderColor"), s = m("borderRadius"), i = m("borderSpacing"), a = m("borderWidth"), b = m("contrast"), u = m("grayscale"), g = m("hueRotate"), y = m("invert"), x = m("gap"), R = m("gradientColorStops"), _ = m("gradientColorStopPositions"), h = m("inset"), p = m("margin"), E = m("opacity"), C = m("padding"), z = m("saturate"), A = m("scale"), M = m("sepia"), Q = m("skew"), K = m("space"), ee = m("translate"), N = () => ["auto", "contain", "none"], F = () => ["auto", "hidden", "clip", "visible", "scroll"], U = () => ["auto", c, o], f = () => [c, o], B = () => ["", T, j], I = () => ["auto", W, c], G = () => ["bottom", "center", "left", "left-bottom", "left-top", "right", "right-bottom", "right-top", "top"], O = () => ["solid", "dashed", "dotted", "double", "none"], q = () => ["normal", "multiply", "screen", "overlay", "darken", "lighten", "color-dodge", "color-burn", "hard-light", "soft-light", "difference", "exclusion", "hue", "saturation", "color", "luminosity"], $ = () => ["start", "end", "center", "between", "around", "evenly", "stretch"], S = () => ["", "0", c], J = () => ["auto", "avoid", "all", "avoid-page", "page", "left", "right", "column"], r = () => [W, c];
+  const e = m("colors"), o = m("spacing"), t = m("blur"), n = m("brightness"), l = m("borderColor"), s = m("borderRadius"), i = m("borderSpacing"), a = m("borderWidth"), b = m("contrast"), u = m("grayscale"), g = m("hueRotate"), y = m("invert"), x = m("gap"), R = m("gradientColorStops"), _ = m("gradientColorStopPositions"), h = m("inset"), p = m("margin"), E = m("opacity"), C = m("padding"), z = m("saturate"), A = m("scale"), M = m("sepia"), Q = m("skew"), K = m("space"), ee = m("translate"), N = () => ["auto", "contain", "none"], F = () => ["auto", "hidden", "clip", "visible", "scroll"], U = () => ["auto", c, o], f = () => [c, o], B = () => ["", S, j], I = () => ["auto", W, c], G = () => ["bottom", "center", "left", "left-bottom", "left-top", "right", "right-bottom", "right-top", "top"], O = () => ["solid", "dashed", "dotted", "double", "none"], q = () => ["normal", "multiply", "screen", "overlay", "darken", "lighten", "color-dodge", "color-burn", "hard-light", "soft-light", "difference", "exclusion", "hue", "saturation", "color", "luminosity"], $ = () => ["start", "end", "center", "between", "around", "evenly", "stretch"], T = () => ["", "0", c], J = () => ["auto", "avoid", "all", "avoid-page", "page", "left", "right", "column"], r = () => [W, c];
   return {
     cacheSize: 500,
     separator: ":",
     theme: {
       colors: [Z],
-      spacing: [T, j],
+      spacing: [S, j],
       blur: ["none", "", P, c],
       brightness: r(),
       borderColor: [e],
@@ -560,9 +560,9 @@ const m = (e) => {
       borderSpacing: f(),
       borderWidth: B(),
       contrast: r(),
-      grayscale: S(),
+      grayscale: T(),
       hueRotate: r(),
-      invert: S(),
+      invert: T(),
       gap: f(),
       gradientColorStops: [e],
       gradientColorStopPositions: [Xe, j],
@@ -572,7 +572,7 @@ const m = (e) => {
       padding: f(),
       saturate: r(),
       scale: r(),
-      sepia: S(),
+      sepia: T(),
       skew: r(),
       space: f(),
       translate: f()
@@ -827,14 +827,14 @@ const m = (e) => {
        * @see https://tailwindcss.com/docs/flex-grow
        */
       grow: [{
-        grow: S()
+        grow: T()
       }],
       /**
        * Flex Shrink
        * @see https://tailwindcss.com/docs/flex-shrink
        */
       shrink: [{
-        shrink: S()
+        shrink: T()
       }],
       /**
        * Order
@@ -1292,7 +1292,7 @@ const m = (e) => {
        * @see https://tailwindcss.com/docs/line-height
        */
       leading: [{
-        leading: ["none", "tight", "snug", "normal", "relaxed", "loose", T, c]
+        leading: ["none", "tight", "snug", "normal", "relaxed", "loose", S, c]
       }],
       /**
        * List Style Image
@@ -1368,14 +1368,14 @@ const m = (e) => {
        * @see https://tailwindcss.com/docs/text-decoration-thickness
        */
       "text-decoration-thickness": [{
-        decoration: ["auto", "from-font", T, j]
+        decoration: ["auto", "from-font", S, j]
       }],
       /**
        * Text Underline Offset
        * @see https://tailwindcss.com/docs/text-underline-offset
        */
       "underline-offset": [{
-        "underline-offset": ["auto", T, c]
+        "underline-offset": ["auto", S, c]
       }],
       /**
        * Text Decoration Color
@@ -1857,14 +1857,14 @@ const m = (e) => {
        * @see https://tailwindcss.com/docs/outline-offset
        */
       "outline-offset": [{
-        "outline-offset": [T, c]
+        "outline-offset": [S, c]
       }],
       /**
        * Outline Width
        * @see https://tailwindcss.com/docs/outline-width
        */
       "outline-w": [{
-        outline: [T, j]
+        outline: [S, j]
       }],
       /**
        * Outline Color
@@ -1904,7 +1904,7 @@ const m = (e) => {
        * @see https://tailwindcss.com/docs/ring-offset-width
        */
       "ring-offset-w": [{
-        "ring-offset": [T, j]
+        "ring-offset": [S, j]
       }],
       /**
        * Ring Offset Color
@@ -2499,7 +2499,7 @@ const m = (e) => {
        * @see https://tailwindcss.com/docs/stroke-width
        */
       "stroke-w": [{
-        stroke: [T, j, ne]
+        stroke: [S, j, ne]
       }],
       /**
        * Stroke
@@ -2579,17 +2579,23 @@ function se(...e) {
   return sr(me(e));
 }
 const ar = he(
-  "bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group",
+  "text-center rounded-2xl h-14 relative text-black text-xl font-semibold group",
   {
     variants: {
       variant: {
         default: "bg-white text-black",
         destructive: "bg-white text-black",
         outline: "bg-transparent border-2 border-black text-black hover:bg-black/5"
+      },
+      size: {
+        default: "w-48",
+        sm: "w-32",
+        lg: "w-64"
       }
     },
     defaultVariants: {
-      variant: "default"
+      variant: "default",
+      size: "default"
     }
   }
 ), lr = he(
@@ -2620,7 +2626,9 @@ const ar = he(
     children: l,
     ...s
   }, i) => {
-    const a = t || (o === "destructive" ? "bg-red-500" : "bg-green-400"), b = n === "right" ? "scale-x-[-1]" : "";
+    const a = {
+      backgroundColor: t || (o === "destructive" ? "#ef4444" : "#4ade80")
+    }, b = n === "right" ? "scale-x-[-1]" : "";
     return /* @__PURE__ */ L.jsxs(
       "button",
       {
@@ -2631,10 +2639,8 @@ const ar = he(
           /* @__PURE__ */ L.jsx(
             "div",
             {
-              className: se(
-                lr({ variant: o, direction: n }),
-                o !== "outline" && a
-              ),
+              className: se(lr({ variant: o, direction: n })),
+              style: o !== "outline" ? a : {},
               children: /* @__PURE__ */ L.jsxs(
                 "svg",
                 {

@@ -1,6 +1,6 @@
 {
   "name": "buttonix",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Beautiful animated React button component with smooth hover slide effects. Built with Tailwind CSS and class-variance-authority for modern, customizable UI components.",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
@@ -9,14 +9,17 @@
     ".": {
       "import": "./dist/index.es.js",
       "require": "./dist/index.umd.js",
-      "types": "./dist/index.d.ts"
-    }
+      "types": "./dist/index.d.ts",
+      "style": "./dist/style.css"
+    },
+    "./style.css": "./dist/style.css"
   },
   "files": [
     "dist",
     "README.md",
     "LICENSE"
   ],
+  "style": "dist/style.css",
   "scripts": {
     "build": "vite build",
     "prepublishOnly": "npm run build",
@@ -59,10 +62,13 @@
     "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
+    "@types/autoprefixer": "^9.7.2",
     "@types/node": "^25.1.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.4.24",
+    "postcss": "^8.5.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^3.4.0",
