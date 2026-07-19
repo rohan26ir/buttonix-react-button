@@ -1,2 +1,3 @@
-// index.ts
+"use client";
+
 export * from "./Button";
