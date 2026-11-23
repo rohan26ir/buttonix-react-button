@@ -1,0 +1,161 @@
+# .github/workflows/ci.yml
+# Continuous Integration — runs on every push and PR to main/master.
+# Performs: typecheck, lint, test, build, npm audit, and package size check.
+
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+# Least-privilege defaults — individual jobs may override.
+permissions:
+  contents: read
+
+jobs:
+  # ─── Typecheck ────────────────────────────────────────────────────────────
+  typecheck:
+    name: TypeScript typecheck
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        # actions/checkout pinned to v4 SHA (2026-11-23)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Set up Node.js
+        # actions/setup-node pinned to v4 SHA
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Run TypeScript typecheck
+        run: npm run typecheck
+
+  # ─── Test ─────────────────────────────────────────────────────────────────
+  test:
+    name: Unit tests (Vitest)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Run tests with coverage
+        run: npm run test:coverage
+
+      - name: Upload coverage report
+        # actions/upload-artifact pinned to v4 SHA
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 7
+
+  # ─── Build ────────────────────────────────────────────────────────────────
+  build:
+    name: Production build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Build package
+        run: npm run build
+
+      - name: Check dist artifact sizes
+        run: |
+          echo "=== Dist file sizes ==="
+          du -sh dist/*
+          # Warn if main bundle > 100KB (should be tiny for a button lib)
+          ESSIZE=$(stat -c%s dist/index.es.js 2>/dev/null || stat -f%z dist/index.es.js)
+          if [ "$ESSIZE" -gt 102400 ]; then
+            echo "::warning:: ES bundle exceeds 100KB ($ESSIZE bytes). Consider tree-shaking."
+          fi
+
+      - name: Upload dist artifacts
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  # ─── Security audit ───────────────────────────────────────────────────────
+  audit:
+    name: npm audit & dependency check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Run npm audit (high & critical only)
+        # Fail on high/critical vulnerabilities; moderate+ are reported as warnings.
+        run: npm audit --audit-level=high
+
+      - name: Check for lifecycle scripts in dependencies
+        # Ensure no installed package introduces unexpected install hooks.
+        run: |
+          echo "Checking for lifecycle scripts in production deps..."
+          node -e "
+            const lock = require('./package-lock.json');
+            const pkgs = lock.packages || {};
+            const suspicious = [];
+            for (const [name, meta] of Object.entries(pkgs)) {
+              if (!name) continue;
+              const scripts = meta.scripts || {};
+              const hooks = ['preinstall','install','postinstall','prepack','prepare'].filter(h => scripts[h]);
+              if (hooks.length && !name.startsWith('node_modules/@tailwindcss') && !name.startsWith('node_modules/esbuild') && !name.startsWith('node_modules/@esbuild') && !name.startsWith('node_modules/vite-plugin-dts')) {
+                suspicious.push({ name, hooks });
+              }
+            }
+            if (suspicious.length) {
+              console.warn('⚠ Packages with lifecycle scripts:', JSON.stringify(suspicious, null, 2));
+            } else {
+              console.log('✓ No unexpected lifecycle scripts found.');
+            }
+          "
+

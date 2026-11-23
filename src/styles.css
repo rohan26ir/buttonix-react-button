@@ -1,3 +1,308 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* styles.css — Buttonix global animation definitions
+ * Imported once by the consumer: import 'buttonix/style.css'
+ * All keyframes respect prefers-reduced-motion via the motion-reduce layer.
+ */
+
+@import "tailwindcss";
+
+/* ─── Custom Properties ─────────────────────────────────────────────────── */
+:root {
+  --btnx-shimmer-color: rgba(255, 255, 255, 0.4);
+  --btnx-beam-color: rgba(99, 102, 241, 1);
+  --btnx-ripple-color: rgba(255, 255, 255, 0.5);
+  --btnx-aurora-1: #6366f1;
+  --btnx-aurora-2: #8b5cf6;
+  --btnx-aurora-3: #ec4899;
+  --btnx-aurora-4: #06b6d4;
+}
+
+/* ─── @keyframes ────────────────────────────────────────────────────────── */
+
+@keyframes btnx-gradient-scroll {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes btnx-shimmer-sweep {
+  0%   { transform: translateX(-150%) skewX(-15deg); }
+  100% { transform: translateX(250%) skewX(-15deg); }
+}
+
+@keyframes btnx-bounce-in {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.08); }
+  60%  { transform: scale(0.95); }
+  80%  { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes btnx-jelly {
+  0%   { transform: scale(1, 1); }
+  25%  { transform: scale(0.9, 1.1); }
+  50%  { transform: scale(1.1, 0.9); }
+  75%  { transform: scale(0.95, 1.05); }
+  100% { transform: scale(1, 1); }
+}
+
+@keyframes btnx-aurora-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes btnx-beam-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes btnx-ripple-expand {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ─── Gradient Shift ────────────────────────────────────────────────────── */
+.btnx-gradient-shift {
+  background: linear-gradient(
+    270deg,
+    #6366f1,
+    #8b5cf6,
+    #ec4899,
+    #f59e0b,
+    #10b981,
+    #6366f1
+  );
+  background-size: 400% 400%;
+  animation: btnx-gradient-scroll 6s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnx-gradient-shift {
+    animation: none;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background-size: 100% 100%;
+  }
+}
+
+/* ─── Shimmer / Sweep ───────────────────────────────────────────────────── */
+.btnx-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    var(--btnx-shimmer-color) 50%,
+    transparent 60%
+  );
+  transform: translateX(-150%) skewX(-15deg);
+  pointer-events: none;
+}
+
+.btnx-shimmer:hover::after,
+.btnx-shimmer:focus-visible::after {
+  animation: btnx-shimmer-sweep 0.6s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnx-shimmer::after { display: none; }
+}
+
+/* ─── Border Beam ───────────────────────────────────────────────────────── */
+.btnx-border-beam::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 2px solid transparent;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--btnx-beam-color) 25%,
+    transparent 50%
+  ) border-box;
+  mask: linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btnx-border-beam::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #6366f1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.btnx-border-beam:hover::before,
+.btnx-border-beam:focus-visible::before {
+  opacity: 1;
+  animation: btnx-beam-rotate 2s linear infinite;
+}
+
+.btnx-border-beam:hover::after,
+.btnx-border-beam:focus-visible::after {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnx-border-beam::before {
+    animation: none;
+    border: 2px solid #6366f1;
+    opacity: 1;
+  }
+}
+
+/* ─── Ripple ────────────────────────────────────────────────────────────── */
+.btnx-ripple-wave {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--btnx-ripple-color);
+  transform: scale(0);
+  animation: btnx-ripple-expand 0.6s linear forwards;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnx-ripple-wave { animation: none; display: none; }
+}
+
+/* ─── Bounce ────────────────────────────────────────────────────────────── */
+.btnx-bounce:active {
+  animation: btnx-bounce-in 0.5s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnx-bounce:active { animation: none; }
+}
+
+/* ─── Jelly ─────────────────────────────────────────────────────────────── */
+.btnx-jelly:active {
+  animation: btnx-jelly 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnx-jelly:active { animation: none; }
+}
+
+/* ─── Slide Fill ────────────────────────────────────────────────────────── */
+.btnx-slide-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #4f46e5;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.btnx-slide-fill:hover::after,
+.btnx-slide-fill:focus-visible::after {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnx-slide-fill::after { transition: none; }
+}
+
+/* ─── Underline Reveal ──────────────────────────────────────────────────── */
+.btnx-underline-reveal::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+  height: 2px;
+  background: currentColor;
+  transition: left 0.3s ease, right 0.3s ease;
+}
+
+.btnx-underline-reveal:hover::after,
+.btnx-underline-reveal:focus-visible::after {
+  left: 0;
+  right: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnx-underline-reveal::after { transition: none; }
+}
+
+/* ─── Split / Icon Reveal ───────────────────────────────────────────────── */
+.btnx-split-reveal .btnx-split-icon {
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  transition: max-width 0.3s ease, opacity 0.3s ease;
+}
+
+.btnx-split-reveal:hover .btnx-split-icon,
+.btnx-split-reveal:focus-visible .btnx-split-icon {
+  opacity: 1;
+  max-width: 2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnx-split-reveal .btnx-split-icon { transition: none; }
+}
+
+/* ─── Aurora ────────────────────────────────────────────────────────────── */
+.btnx-aurora {
+  background: linear-gradient(
+    270deg,
+    var(--btnx-aurora-1),
+    var(--btnx-aurora-2),
+    var(--btnx-aurora-3),
+    var(--btnx-aurora-4)
+  );
+  background-size: 300% 300%;
+  animation: btnx-aurora-shift 5s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnx-aurora {
+    animation: none;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background-size: 100% 100%;
+  }
+}
+
+/* ─── Loading Spinner ───────────────────────────────────────────────────── */
+@keyframes btnx-spin {
+  to { transform: rotate(360deg); }
+}
+
+.btnx-spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: btnx-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnx-spinner {
+    animation: none;
+    border-style: dashed;
+    opacity: 0.6;
+  }
+}
+
+/* ─── Success / Error State Icons ───────────────────────────────────────── */
+.btnx-state-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}

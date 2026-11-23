@@ -1,135 +1,208 @@
+// Button.tsx — Buttonix main component
+// Implements 22 distinct variants with full accessibility & motion support.
 "use client";
 
 import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "./utils";
+import { buttonVariants } from "./variants";
+import type { ButtonProps, ButtonState } from "./types";
 
-const buttonBase = cva(
-  "inline-flex items-center justify-center rounded-2xl h-14 relative text-xl font-semibold group overflow-hidden transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2",
-  {
-    variants: {
-      variant: {
-        default: "bg-white text-black hover:bg-gray-100 shadow-md focus:ring-gray-300",
-        destructive: "bg-red-500 text-white hover:bg-red-600 shadow-md focus:ring-red-500",
-        outline: "bg-transparent border-2 border-black text-black hover:bg-black hover:text-white focus:ring-black",
-        ghost: "bg-transparent text-black hover:bg-black/10 focus:ring-gray-400",
-        glass: "bg-white/20 backdrop-blur-md border border-white/30 text-black shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:bg-white/30 focus:ring-white/50",
-        gradient: "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-purple-500",
-        neumorphic: "bg-[#e0e5ec] text-gray-700 shadow-[9px_9px_16px_rgb(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)] hover:shadow-[inset_6px_6px_10px_0_rgba(163,177,198,0.7),inset_-6px_-6px_10px_0_rgba(255,255,255,0.8)] border-none focus:ring-gray-400",
-      },
-      size: {
-        default: "w-48 px-6",
-        sm: "w-32 px-4 h-10 text-sm rounded-xl",
-        lg: "w-64 px-8 h-16 text-2xl rounded-3xl",
-        full: "w-full px-6",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
+// ─── Internal sub-components ──────────────────────────────────────────────────
+
+/** Animated loading spinner (respects prefers-reduced-motion via CSS). */
+const Spinner: React.FC = () => (
+  <span className="btnx-spinner" aria-hidden="true" />
 );
 
-const slideBase = cva(
-  "rounded-xl h-[calc(100%-8px)] flex items-center justify-center absolute top-[4px] z-10 duration-500 ease-[cubic-bezier(0.5,0,0,1)]",
-  {
-    variants: {
-      variant: {
-        default: "",
-        destructive: "",
-        outline: "hidden",
-        ghost: "hidden",
-        glass: "bg-white/40",
-        gradient: "bg-white/20 backdrop-blur-sm",
-        neumorphic: "bg-[#e0e5ec] shadow-[inset_2px_2px_5px_rgba(163,177,198,0.5),inset_-2px_-2px_5px_rgba(255,255,255,0.8)]",
-      },
-      direction: {
-        left: "left-1 w-[25%] group-hover:w-[calc(100%-8px)]",
-        right: "right-1 w-[25%] group-hover:w-[calc(100%-8px)] flex-row-reverse",
-      },
-      size: {
-        default: "rounded-xl",
-        sm: "rounded-lg top-[3px] h-[calc(100%-6px)] left-[3px] group-hover:w-[calc(100%-6px)]",
-        lg: "rounded-2xl top-[5px] h-[calc(100%-10px)] left-[5px] group-hover:w-[calc(100%-10px)]",
-        full: "rounded-xl",
-      }
-    },
-    defaultVariants: {
-      variant: "default",
-      direction: "left",
-      size: "default"
-    },
+/** State icon for success / error feedback. */
+const StateIcon: React.FC<{ state: ButtonState }> = ({ state }) => {
+  if (state === "success") {
+    return (
+      <span className="btnx-state-icon" aria-hidden="true">
+        {/* Checkmark */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          width="1em"
+          height="1em"
+        >
+          <path
+            fillRule="evenodd"
+            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </span>
+    );
   }
-);
+  if (state === "error") {
+    return (
+      <span className="btnx-state-icon" aria-hidden="true">
+        {/* X mark */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          width="1em"
+          height="1em"
+        >
+          <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+        </svg>
+      </span>
+    );
+  }
+  return null;
+};
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonBase> {
-  /** Optional custom background color for the slider */
-  color?: string;
-  /** Direction of the slide animation */
-  direction?: "left" | "right";
-  /** Whether to show the slide animation */
-  animated?: boolean;
+// ─── Ripple helper ─────────────────────────────────────────────────────────────
+
+/**
+ * Creates and injects a DOM ripple element at the click position.
+ * No React state needed — purely imperative for performance.
+ */
+function createRipple(
+  event: React.MouseEvent<HTMLButtonElement>,
+  prefersReducedMotion: boolean
+): void {
+  if (prefersReducedMotion) return;
+
+  const button = event.currentTarget;
+  const rect = button.getBoundingClientRect();
+  const diameter = Math.max(rect.width, rect.height);
+  const radius = diameter / 2;
+
+  const ripple = document.createElement("span");
+  ripple.className = "btnx-ripple-wave";
+  ripple.style.cssText = `
+    width: ${diameter}px;
+    height: ${diameter}px;
+    left: ${event.clientX - rect.left - radius}px;
+    top: ${event.clientY - rect.top - radius}px;
+  `;
+
+  button.appendChild(ripple);
+
+  // Clean up after animation completes
+  ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
 }
 
+// ─── Main Button Component ────────────────────────────────────────────────────
+
+/**
+ * Buttonix `Button` — a production-ready, accessible React button component
+ * with 22 distinct visual variants and animations.
+ *
+ * @example
+ * ```tsx
+ * import { Button } from 'buttonix';
+ * import 'buttonix/style.css';
+ *
+ * <Button variant="shimmer" size="lg">Get Started</Button>
+ * <Button variant="ripple" isLoading>Processing…</Button>
+ * ```
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
-      variant,
-      size,
+      variant = "solid",
+      size = "default",
+      isLoading = false,
+      loadingText = "Loading…",
+      state = "idle",
       color,
-      direction = "left",
-      animated = true,
+      disableAnimation = false,
+      leftIcon,
+      rightIcon,
       children,
-      ...props
+      disabled,
+      onClick,
+      style,
+      type = "button",
+      ...rest
     },
     ref
   ) => {
-    // Dynamic color override for the slide animation
-    const slideStyle: React.CSSProperties = {
-      backgroundColor: color || (variant === "destructive" ? "#ef4444" : variant === "default" ? "#4ade80" : undefined),
+    const isDisabled = disabled || isLoading;
+    const isBusy = isLoading;
+    const showStateIcon = state === "success" || state === "error";
+
+    // Build inline style overrides from `color` prop
+    const colorStyle: React.CSSProperties = color
+      ? ({
+          "--btnx-shimmer-color": color,
+          "--btnx-beam-color": color,
+          "--btnx-ripple-color": color,
+        } as React.CSSProperties)
+      : {};
+
+    // Handle ripple click — read matchMedia lazily inside the handler (SSR-safe)
+    const handleClick = React.useCallback(
+      (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (variant === "ripple" && !disableAnimation) {
+          const reduced =
+            typeof window !== "undefined" &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          createRipple(event, reduced);
+        }
+        onClick?.(event);
+      },
+      [variant, disableAnimation, onClick]
+    );
+
+    // State-specific classes override for success/error
+    const stateClasses: Record<string, string> = {
+      success: "!bg-emerald-500 !border-emerald-500 !text-white",
+      error: "!bg-red-500 !border-red-500 !text-white",
+      idle: "",
+      loading: "",
     };
-
-    const iconFlip = direction === "right" ? "scale-x-[-1]" : "";
-
-    // If it's a variant that usually shouldn't have the slider unless explicitly animated
-    const shouldShowSlider = animated && !["outline", "ghost"].includes(variant || "");
 
     return (
       <button
-        className={cn(buttonBase({ variant, size, className }))}
         ref={ref}
-        {...props}
-      >
-        {shouldShowSlider && (
-          <div
-            className={cn(slideBase({ variant, direction, size }))}
-            style={color || variant === "default" || variant === "destructive" ? slideStyle : {}}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1024 1024"
-              height={size === "sm" ? "18px" : size === "lg" ? "32px" : "25px"}
-              width={size === "sm" ? "18px" : size === "lg" ? "32px" : "25px"}
-              className={cn("transform transition-transform duration-500", iconFlip, "group-hover:scale-110")}
-            >
-              <path
-                d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
-                fill="currentColor"
-              />
-              <path
-                d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
-                fill="currentColor"
-              />
-            </svg>
-          </div>
+        type={type}
+        className={cn(
+          buttonVariants({ variant, size }),
+          disableAnimation && "!transition-none !animation-none",
+          stateClasses[state],
+          className
         )}
-        <span className={cn("relative z-20 flex items-center justify-center transition-transform duration-500", shouldShowSlider ? (direction === "left" ? "translate-x-3 group-hover:translate-x-0" : "-translate-x-3 group-hover:translate-x-0") : "")}>
-          {children}
-        </span>
+        disabled={isDisabled}
+        aria-disabled={isDisabled}
+        aria-busy={isBusy || undefined}
+        aria-label={isBusy ? loadingText : rest["aria-label"]}
+        onClick={handleClick}
+        style={{ ...colorStyle, ...style }}
+        {...rest}
+      >
+        {/* Loading state */}
+        {isLoading && <Spinner />}
+
+        {/* Success / Error state icon (replaces left icon) */}
+        {!isLoading && showStateIcon && <StateIcon state={state} />}
+
+        {/* Left icon (shown when not loading and not in success/error state) */}
+        {!isLoading && !showStateIcon && leftIcon && (
+          <span className="btnx-icon-left" aria-hidden="true">
+            {leftIcon}
+          </span>
+        )}
+
+        {/* Button label */}
+        {isLoading ? (
+          <span className="sr-only">{loadingText}</span>
+        ) : (
+          children
+        )}
+
+        {/* Right icon */}
+        {!isLoading && rightIcon && (
+          <span className="btnx-icon-right" aria-hidden="true">
+            {rightIcon}
+          </span>
+        )}
       </button>
     );
   }
@@ -137,4 +210,5 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
 Button.displayName = "Button";
 
-export { Button };
+export { Button };
+export type { ButtonProps };

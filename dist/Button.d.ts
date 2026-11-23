@@ -1,16 +1,18 @@
-import { VariantProps } from 'class-variance-authority';
+import { ButtonProps } from './types';
 import * as React from "react";
-declare const buttonBase: (props?: ({
-    variant?: "default" | "destructive" | "outline" | "ghost" | "glass" | "gradient" | "neumorphic" | null | undefined;
-    size?: "default" | "sm" | "lg" | "full" | null | undefined;
-} & import('class-variance-authority/types').ClassProp) | undefined) => string;
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonBase> {
-    /** Optional custom background color for the slider */
-    color?: string;
-    /** Direction of the slide animation */
-    direction?: "left" | "right";
-    /** Whether to show the slide animation */
-    animated?: boolean;
-}
+/**
+ * Buttonix `Button` — a production-ready, accessible React button component
+ * with 22 distinct visual variants and animations.
+ *
+ * @example
+ * ```tsx
+ * import { Button } from 'buttonix';
+ * import 'buttonix/style.css';
+ *
+ * <Button variant="shimmer" size="lg">Get Started</Button>
+ * <Button variant="ripple" isLoading>Processing…</Button>
+ * ```
+ */
 declare const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLButtonElement>>;
 export { Button };
+export type { ButtonProps };

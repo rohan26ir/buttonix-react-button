@@ -1,16 +1,15 @@
 {
   "name": "buttonix",
-  "version": "1.0.0",
-  "description": "Beautiful animated React button component with smooth hover slide effects. Built with Tailwind CSS and class-variance-authority for modern, customizable UI components.",
+  "version": "2.0.0",
+  "description": "22 beautiful animated React button variants — solid, outline, ghost, soft, gradient, glassmorphism, shimmer, border-beam, glow, neumorphic, neon, aurora, 3D-press, ripple, bounce, jelly, slide-fill, underline-reveal, split-reveal, magnetic, and more. Zero runtime beyond React. Built with Tailwind CSS v4, CVA, and strict TypeScript.",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js",
       "types": "./dist/index.d.ts",
-      "style": "./dist/style.css"
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
     },
     "./style.css": "./dist/style.css"
   },
@@ -19,11 +18,17 @@
     "README.md",
     "LICENSE"
   ],
-  "style": "dist/style.css",
+  "sideEffects": [
+    "dist/style.css"
+  ],
   "scripts": {
-    "build": "vite build",
-    "prepublishOnly": "npm run build",
-    "test": "echo \"No tests specified\" && exit 0"
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "react",
@@ -33,18 +38,28 @@
     "tailwind",
     "tailwindcss",
     "animation",
-    "hover-effect",
-    "slide-animation",
+    "shimmer",
+    "ripple",
+    "glassmorphism",
+    "neumorphic",
+    "gradient",
     "ui-component",
     "typescript",
     "cva",
     "class-variance-authority",
+    "accessible",
+    "aria",
     "frontend",
     "ui",
     "ux",
     "modern-ui",
     "react-button",
-    "customizable-button"
+    "customizable-button",
+    "neon",
+    "aurora",
+    "3d-press",
+    "border-beam",
+    "glow"
   ],
   "author": {
     "name": "Mahedul Islam Rohan",
@@ -63,18 +78,24 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.13",
     "@types/node": "^26.1.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
+    "@vitest/coverage-v8": "^3.2.7",
     "autoprefixer": "^10.5.4",
+    "jsdom": "^26.1.0",
     "postcss": "^8.5.20",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
     "vite": "^8.1.5",
-    "vite-plugin-dts": "^5.0.3"
+    "vite-plugin-dts": "^5.0.3",
+    "vitest": "^3.2.7"
   },
   "repository": {
     "type": "git",
@@ -90,8 +111,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=7.0.0"
-  },
-  "sideEffects": false
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
 }

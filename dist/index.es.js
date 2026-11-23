@@ -1,11 +1,6 @@
 "use client";
 import * as e from "react";
-//#region \0rolldown/runtime.js
-var t = (e, t) => () => (t || (e((t = { exports: {} }).exports, t), e = null), t.exports), n = /* @__PURE__ */ ((e) => typeof require < "u" ? require : typeof Proxy < "u" ? new Proxy(e, { get: (e, t) => (typeof require < "u" ? require : e)[t] }) : e)(function(e) {
-	if (typeof require < "u") return require.apply(this, arguments);
-	throw Error("Calling `require` for \"" + e + "\" in an environment that doesn't expose the `require` function. See https://rolldown.rs/in-depth/bundling-cjs#require-external-modules for more details.");
-});
-//#endregion
+import { jsx as t, jsxs as n } from "react/jsx-runtime";
 //#region node_modules/clsx/dist/clsx.mjs
 function r(e) {
 	var t, n, i = "";
@@ -21,129 +16,101 @@ function i() {
 	return i;
 }
 //#endregion
-//#region node_modules/class-variance-authority/dist/index.mjs
-var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e, t) => (n) => {
-	if (t?.variants == null) return o(e, n?.class, n?.className);
-	let { variants: r, defaultVariants: i } = t, s = Object.keys(r).map((e) => {
-		let t = n?.[e], o = i?.[e];
-		if (t === null) return null;
-		let s = a(t) || a(o);
-		return r[e][s];
-	}), c = n && Object.entries(n).reduce((e, t) => {
-		let [n, r] = t;
-		return r === void 0 || (e[n] = r), e;
-	}, {});
-	return o(e, s, t?.compoundVariants?.reduce((e, t) => {
-		let { class: n, className: r, ...a } = t;
-		return Object.entries(a).every((e) => {
-			let [t, n] = e;
-			return Array.isArray(n) ? n.includes({
-				...i,
-				...c
-			}[t]) : {
-				...i,
-				...c
-			}[t] === n;
-		}) ? [
-			...e,
-			n,
-			r
-		] : e;
-	}, []), n?.class, n?.className);
-}, c = (e, t) => {
+//#region node_modules/tailwind-merge/dist/bundle-mjs.mjs
+var a = (e, t) => {
 	let n = Array(e.length + t.length);
 	for (let t = 0; t < e.length; t++) n[t] = e[t];
 	for (let r = 0; r < t.length; r++) n[e.length + r] = t[r];
 	return n;
-}, l = (e, t) => ({
+}, o = (e, t) => ({
 	classGroupId: e,
 	validator: t
-}), u = (e = /* @__PURE__ */ new Map(), t = null, n) => ({
+}), s = (e = /* @__PURE__ */ new Map(), t = null, n) => ({
 	nextPart: e,
 	validators: t,
 	classGroupId: n
-}), d = "-", f = [], p = "arbitrary..", m = (e) => {
-	let t = ee(e), { conflictingClassGroups: n, conflictingClassGroupModifiers: r } = e;
+}), c = "-", l = [], u = "arbitrary..", d = (e) => {
+	let t = m(e), { conflictingClassGroups: n, conflictingClassGroupModifiers: r } = e;
 	return {
 		getClassGroupId: (e) => {
-			if (e.startsWith("[") && e.endsWith("]")) return g(e);
-			let n = e.split(d);
-			return h(n, +(n[0] === "" && n.length > 1), t);
+			if (e.startsWith("[") && e.endsWith("]")) return p(e);
+			let n = e.split(c);
+			return f(n, +(n[0] === "" && n.length > 1), t);
 		},
 		getConflictingClassGroupIds: (e, t) => {
 			if (t) {
 				let t = r[e], i = n[e];
-				return t ? i ? c(i, t) : t : i || f;
+				return t ? i ? a(i, t) : t : i || l;
 			}
-			return n[e] || f;
+			return n[e] || l;
 		}
 	};
-}, h = (e, t, n) => {
+}, f = (e, t, n) => {
 	if (e.length - t === 0) return n.classGroupId;
 	let r = e[t], i = n.nextPart.get(r);
 	if (i) {
-		let n = h(e, t + 1, i);
+		let n = f(e, t + 1, i);
 		if (n) return n;
 	}
 	let a = n.validators;
 	if (a === null) return;
-	let o = t === 0 ? e.join(d) : e.slice(t).join(d), s = a.length;
+	let o = t === 0 ? e.join(c) : e.slice(t).join(c), s = a.length;
 	for (let e = 0; e < s; e++) {
 		let t = a[e];
 		if (t.validator(o)) return t.classGroupId;
 	}
-}, g = (e) => e.slice(1, -1).indexOf(":") === -1 ? void 0 : (() => {
+}, p = (e) => e.slice(1, -1).indexOf(":") === -1 ? void 0 : (() => {
 	let t = e.slice(1, -1), n = t.indexOf(":"), r = t.slice(0, n);
-	return r ? p + r : void 0;
-})(), ee = (e) => {
+	return r ? u + r : void 0;
+})(), m = (e) => {
 	let { theme: t, classGroups: n } = e;
-	return _(n, t);
-}, _ = (e, t) => {
-	let n = u();
+	return h(n, t);
+}, h = (e, t) => {
+	let n = s();
 	for (let r in e) {
 		let i = e[r];
-		v(i, n, r, t);
+		g(i, n, r, t);
 	}
 	return n;
-}, v = (e, t, n, r) => {
+}, g = (e, t, n, r) => {
 	let i = e.length;
 	for (let a = 0; a < i; a++) {
 		let i = e[a];
-		y(i, t, n, r);
+		_(i, t, n, r);
 	}
-}, y = (e, t, n, r) => {
+}, _ = (e, t, n, r) => {
 	if (typeof e == "string") {
-		b(e, t, n);
+		v(e, t, n);
 		return;
 	}
 	if (typeof e == "function") {
-		x(e, t, n, r);
+		y(e, t, n, r);
 		return;
 	}
-	S(e, t, n, r);
-}, b = (e, t, n) => {
-	let r = e === "" ? t : C(t, e);
+	b(e, t, n, r);
+}, v = (e, t, n) => {
+	let r = e === "" ? t : x(t, e);
 	r.classGroupId = n;
-}, x = (e, t, n, r) => {
-	if (w(e)) {
-		v(e(r), t, n, r);
+}, y = (e, t, n, r) => {
+	if (S(e)) {
+		g(e(r), t, n, r);
 		return;
 	}
-	t.validators === null && (t.validators = []), t.validators.push(l(n, e));
-}, S = (e, t, n, r) => {
+	t.validators === null && (t.validators = []), t.validators.push(o(n, e));
+}, b = (e, t, n, r) => {
 	let i = Object.entries(e), a = i.length;
 	for (let e = 0; e < a; e++) {
 		let [a, o] = i[e];
-		v(o, C(t, a), n, r);
+		g(o, x(t, a), n, r);
 	}
-}, C = (e, t) => {
-	let n = e, r = t.split(d), i = r.length;
+}, x = (e, t) => {
+	let n = e, r = t.split(c), i = r.length;
 	for (let e = 0; e < i; e++) {
 		let t = r[e], i = n.nextPart.get(t);
-		i || (i = u(), n.nextPart.set(t, i)), n = i;
+		i || (i = s(), n.nextPart.set(t, i)), n = i;
 	}
 	return n;
-}, w = (e) => "isThemeGetter" in e && e.isThemeGetter === !0, te = (e) => {
+}, S = (e) => "isThemeGetter" in e && e.isThemeGetter === !0, C = (e) => {
 	if (e < 1) return {
 		get: () => void 0,
 		set: () => {}
@@ -161,19 +128,19 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 			e in n ? n[e] = t : i(e, t);
 		}
 	};
-}, T = "!", E = ":", ne = [], D = (e, t, n, r, i) => ({
+}, w = "!", T = ":", ee = [], E = (e, t, n, r, i) => ({
 	modifiers: e,
 	hasImportantModifier: t,
 	baseClassName: n,
 	maybePostfixModifierPosition: r,
 	isExternal: i
-}), O = (e) => {
+}), D = (e) => {
 	let { prefix: t, experimentalParseClassName: n } = e, r = (e) => {
 		let t = [], n = 0, r = 0, i = 0, a, o = e.length;
 		for (let s = 0; s < o; s++) {
 			let o = e[s];
 			if (n === 0 && r === 0) {
-				if (o === E) {
+				if (o === T) {
 					t.push(e.slice(i, s)), i = s + 1;
 					continue;
 				}
@@ -185,13 +152,13 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 			o === "[" ? n++ : o === "]" ? n-- : o === "(" ? r++ : o === ")" && r--;
 		}
 		let s = t.length === 0 ? e : e.slice(i), c = s, l = !1;
-		s.endsWith(T) ? (c = s.slice(0, -1), l = !0) : s.startsWith(T) && (c = s.slice(1), l = !0);
+		s.endsWith(w) ? (c = s.slice(0, -1), l = !0) : s.startsWith(w) && (c = s.slice(1), l = !0);
 		let u = a && a > i ? a - i : void 0;
-		return D(t, l, c, u);
+		return E(t, l, c, u);
 	};
 	if (t) {
-		let e = t + E, n = r;
-		r = (t) => t.startsWith(e) ? n(t.slice(e.length)) : D(ne, !1, t, void 0, !0);
+		let e = t + T, n = r;
+		r = (t) => t.startsWith(e) ? n(t.slice(e.length)) : E(ee, !1, t, void 0, !0);
 	}
 	if (n) {
 		let e = r;
@@ -201,7 +168,7 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 		});
 	}
 	return r;
-}, k = (e) => {
+}, te = (e) => {
 	let t = /* @__PURE__ */ new Map();
 	return e.orderSensitiveModifiers.forEach((e, n) => {
 		t.set(e, 1e6 + n);
@@ -213,18 +180,18 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 		}
 		return r.length > 0 && (r.sort(), n.push(...r)), n;
 	};
-}, A = (e) => ({
-	cache: te(e.cacheSize),
-	parseClassName: O(e),
-	sortModifiers: k(e),
-	postfixLookupClassGroupIds: j(e),
-	...m(e)
-}), j = (e) => {
+}, O = (e) => ({
+	cache: C(e.cacheSize),
+	parseClassName: D(e),
+	sortModifiers: te(e),
+	postfixLookupClassGroupIds: k(e),
+	...d(e)
+}), k = (e) => {
 	let t = Object.create(null), n = e.postfixLookupClassGroups;
 	if (n) for (let e = 0; e < n.length; e++) t[n[e]] = !0;
 	return t;
-}, M = /\s+/, N = (e, t) => {
-	let { parseClassName: n, getClassGroupId: r, getConflictingClassGroupIds: i, sortModifiers: a, postfixLookupClassGroupIds: o } = t, s = [], c = e.trim().split(M), l = "";
+}, A = /\s+/, j = (e, t) => {
+	let { parseClassName: n, getClassGroupId: r, getConflictingClassGroupIds: i, sortModifiers: a, postfixLookupClassGroupIds: o } = t, s = [], c = e.trim().split(A), l = "";
 	for (let e = c.length - 1; e >= 0; --e) {
 		let t = c[e], { isExternal: u, modifiers: d, hasImportantModifier: f, baseClassName: p, maybePostfixModifierPosition: m } = n(t);
 		if (u) {
@@ -248,45 +215,45 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 			}
 			h = !1;
 		}
-		let ee = d.length === 0 ? "" : d.length === 1 ? d[0] : a(d).join(":"), _ = f ? ee + T : ee, v = _ + g;
-		if (s.indexOf(v) > -1) continue;
-		s.push(v);
-		let y = i(g, h);
-		for (let e = 0; e < y.length; ++e) {
-			let t = y[e];
-			s.push(_ + t);
+		let _ = d.length === 0 ? "" : d.length === 1 ? d[0] : a(d).join(":"), v = f ? _ + w : _, y = v + g;
+		if (s.indexOf(y) > -1) continue;
+		s.push(y);
+		let b = i(g, h);
+		for (let e = 0; e < b.length; ++e) {
+			let t = b[e];
+			s.push(v + t);
 		}
 		l = t + (l.length > 0 ? " " + l : l);
 	}
 	return l;
-}, P = (...e) => {
+}, M = (...e) => {
 	let t = 0, n, r, i = "";
-	for (; t < e.length;) (n = e[t++]) && (r = F(n)) && (i && (i += " "), i += r);
+	for (; t < e.length;) (n = e[t++]) && (r = N(n)) && (i && (i += " "), i += r);
 	return i;
-}, F = (e) => {
+}, N = (e) => {
 	if (typeof e == "string") return e;
 	let t, n = "";
-	for (let r = 0; r < e.length; r++) e[r] && (t = F(e[r])) && (n && (n += " "), n += t);
+	for (let r = 0; r < e.length; r++) e[r] && (t = N(e[r])) && (n && (n += " "), n += t);
 	return n;
-}, re = (e, ...t) => {
-	let n, r, i, a, o = (o) => (n = A(t.reduce((e, t) => t(e), e())), r = n.cache.get, i = n.cache.set, a = s, s(o)), s = (e) => {
+}, P = (e, ...t) => {
+	let n, r, i, a, o = (o) => (n = O(t.reduce((e, t) => t(e), e())), r = n.cache.get, i = n.cache.set, a = s, s(o)), s = (e) => {
 		let t = r(e);
 		if (t) return t;
-		let a = N(e, n);
+		let a = j(e, n);
 		return i(e, a), a;
 	};
-	return a = o, (...e) => a(P(...e));
-}, ie = [], I = (e) => {
-	let t = (t) => t[e] || ie;
+	return a = o, (...e) => a(M(...e));
+}, ne = [], F = (e) => {
+	let t = (t) => t[e] || ne;
 	return t.isThemeGetter = !0, t;
-}, L = /^\[(?:(\w[\w-]*):)?(.+)\]$/i, R = /^\((?:(\w[\w-]*):)?(.+)\)$/i, z = /^\d+(?:\.\d+)?\/\d+(?:\.\d+)?$/, ae = /^(\d+(\.\d+)?)?(xs|sm|md|lg|xl)$/, B = /\d+(%|px|r?em|[sdl]?v([hwib]|min|max)|pt|pc|in|cm|mm|cap|ch|ex|r?lh|cq(w|h|i|b|min|max))|\b(calc|min|max|clamp)\(.+\)|^0$/, oe = /^(rgba?|hsla?|hwb|(ok)?(lab|lch)|color-mix)\(.+\)$/, V = /^(inset_)?-?((\d+)?\.?(\d+)[a-z]+|0)_-?((\d+)?\.?(\d+)[a-z]+|0)/, H = /^(url|image|image-set|cross-fade|element|(repeating-)?(linear|radial|conic)-gradient)\(.+\)$/, U = (e) => z.test(e), W = (e) => !!e && !Number.isNaN(Number(e)), G = (e) => !!e && Number.isInteger(Number(e)), se = (e) => e.endsWith("%") && W(e.slice(0, -1)), K = (e) => ae.test(e), ce = () => !0, le = (e) => B.test(e) && !oe.test(e), q = () => !1, ue = (e) => V.test(e), de = (e) => H.test(e), fe = (e) => !J(e) && !X(e), pe = (e) => e.startsWith("@container") && (e[10] === "/" && e[11] !== void 0 || e[11] === "s" && e[16] !== void 0 && e.startsWith("-size/", 10) || e[11] === "n" && e[18] !== void 0 && e.startsWith("-normal/", 10)), me = (e) => Z(e, Ae, q), J = (e) => L.test(e), Y = (e) => Z(e, je, le), he = (e) => Z(e, Me, W), ge = (e) => Z(e, Pe, ce), _e = (e) => Z(e, Ne, q), ve = (e) => Z(e, Oe, q), ye = (e) => Z(e, ke, de), be = (e) => Z(e, Fe, ue), X = (e) => R.test(e), xe = (e) => Q(e, je), Se = (e) => Q(e, Ne), Ce = (e) => Q(e, Oe), we = (e) => Q(e, Ae), Te = (e) => Q(e, ke), Ee = (e) => Q(e, Fe, !0), De = (e) => Q(e, Pe, !0), Z = (e, t, n) => {
-	let r = L.exec(e);
+}, I = /^\[(?:(\w[\w-]*):)?(.+)\]$/i, re = /^\((?:(\w[\w-]*):)?(.+)\)$/i, ie = /^\d+(?:\.\d+)?\/\d+(?:\.\d+)?$/, L = /^(\d+(\.\d+)?)?(xs|sm|md|lg|xl)$/, R = /\d+(%|px|r?em|[sdl]?v([hwib]|min|max)|pt|pc|in|cm|mm|cap|ch|ex|r?lh|cq(w|h|i|b|min|max))|\b(calc|min|max|clamp)\(.+\)|^0$/, z = /^(rgba?|hsla?|hwb|(ok)?(lab|lch)|color-mix)\(.+\)$/, ae = /^(inset_)?-?((\d+)?\.?(\d+)[a-z]+|0)_-?((\d+)?\.?(\d+)[a-z]+|0)/, B = /^(url|image|image-set|cross-fade|element|(repeating-)?(linear|radial|conic)-gradient)\(.+\)$/, V = (e) => ie.test(e), H = (e) => !!e && !Number.isNaN(Number(e)), U = (e) => !!e && Number.isInteger(Number(e)), oe = (e) => e.endsWith("%") && H(e.slice(0, -1)), W = (e) => L.test(e), se = () => !0, ce = (e) => R.test(e) && !z.test(e), G = () => !1, K = (e) => ae.test(e), q = (e) => B.test(e), le = (e) => !J(e) && !X(e), ue = (e) => e.startsWith("@container") && (e[10] === "/" && e[11] !== void 0 || e[11] === "s" && e[16] !== void 0 && e.startsWith("-size/", 10) || e[11] === "n" && e[18] !== void 0 && e.startsWith("-normal/", 10)), de = (e) => Q(e, Ee, G), J = (e) => I.test(e), Y = (e) => Q(e, De, ce), fe = (e) => Q(e, Oe, H), pe = (e) => Q(e, Ae, se), me = (e) => Q(e, ke, G), he = (e) => Q(e, we, G), ge = (e) => Q(e, Te, q), _e = (e) => Q(e, je, K), X = (e) => re.test(e), Z = (e) => $(e, De), ve = (e) => $(e, ke), ye = (e) => $(e, we), be = (e) => $(e, Ee), xe = (e) => $(e, Te), Se = (e) => $(e, je, !0), Ce = (e) => $(e, Ae, !0), Q = (e, t, n) => {
+	let r = I.exec(e);
 	return r ? r[1] ? t(r[1]) : n(r[2]) : !1;
-}, Q = (e, t, n = !1) => {
-	let r = R.exec(e);
+}, $ = (e, t, n = !1) => {
+	let r = re.exec(e);
 	return r ? r[1] ? t(r[1]) : n : !1;
-}, Oe = (e) => e === "position" || e === "percentage", ke = (e) => e === "image" || e === "url", Ae = (e) => e === "length" || e === "size" || e === "bg-size", je = (e) => e === "length", Me = (e) => e === "number", Ne = (e) => e === "family-name", Pe = (e) => e === "number" || e === "weight", Fe = (e) => e === "shadow", Ie = /*#__PURE__*/ re(() => {
-	let e = I("color"), t = I("font"), n = I("text"), r = I("font-weight"), i = I("tracking"), a = I("leading"), o = I("breakpoint"), s = I("container"), c = I("spacing"), l = I("radius"), u = I("shadow"), d = I("inset-shadow"), f = I("text-shadow"), p = I("drop-shadow"), m = I("blur"), h = I("perspective"), g = I("aspect"), ee = I("ease"), _ = I("animate"), v = () => [
+}, we = (e) => e === "position" || e === "percentage", Te = (e) => e === "image" || e === "url", Ee = (e) => e === "length" || e === "size" || e === "bg-size", De = (e) => e === "length", Oe = (e) => e === "number", ke = (e) => e === "family-name", Ae = (e) => e === "number" || e === "weight", je = (e) => e === "shadow", Me = /*#__PURE__*/ P(() => {
+	let e = F("color"), t = F("font"), n = F("text"), r = F("font-weight"), i = F("tracking"), a = F("leading"), o = F("breakpoint"), s = F("container"), c = F("spacing"), l = F("radius"), u = F("shadow"), d = F("inset-shadow"), f = F("text-shadow"), p = F("drop-shadow"), m = F("blur"), h = F("perspective"), g = F("aspect"), _ = F("ease"), v = F("animate"), y = () => [
 		"auto",
 		"avoid",
 		"all",
@@ -295,7 +262,7 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 		"left",
 		"right",
 		"column"
-	], y = () => [
+	], b = () => [
 		"center",
 		"top",
 		"bottom",
@@ -309,59 +276,59 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 		"right-bottom",
 		"bottom-left",
 		"left-bottom"
-	], b = () => [
-		...y(),
+	], x = () => [
+		...b(),
 		X,
 		J
-	], x = () => [
+	], S = () => [
 		"auto",
 		"hidden",
 		"clip",
 		"visible",
 		"scroll"
-	], S = () => [
+	], C = () => [
 		"auto",
 		"contain",
 		"none"
-	], C = () => [
+	], w = () => [
 		X,
 		J,
 		c
-	], w = () => [
-		U,
+	], T = () => [
+		V,
 		"full",
 		"auto",
-		...C()
-	], te = () => [
-		G,
+		...w()
+	], ee = () => [
+		U,
 		"none",
 		"subgrid",
 		X,
 		J
-	], T = () => [
+	], E = () => [
 		"auto",
 		{ span: [
 			"full",
-			G,
+			U,
 			X,
 			J
 		] },
-		G,
+		U,
 		X,
 		J
-	], E = () => [
-		G,
+	], D = () => [
+		U,
 		"auto",
 		X,
 		J
-	], ne = () => [
+	], te = () => [
 		"auto",
 		"min",
 		"max",
 		"fr",
 		X,
 		J
-	], D = () => [
+	], O = () => [
 		"start",
 		"end",
 		"center",
@@ -372,15 +339,15 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 		"baseline",
 		"center-safe",
 		"end-safe"
-	], O = () => [
+	], k = () => [
 		"start",
 		"end",
 		"center",
 		"stretch",
 		"center-safe",
 		"end-safe"
-	], k = () => ["auto", ...C()], A = () => [
-		U,
+	], A = () => ["auto", ...w()], j = () => [
+		V,
 		"auto",
 		"full",
 		"dvw",
@@ -392,9 +359,9 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 		"min",
 		"max",
 		"fit",
-		...C()
-	], j = () => [
-		U,
+		...w()
+	], M = () => [
+		V,
 		"screen",
 		"full",
 		"dvw",
@@ -403,9 +370,9 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 		"min",
 		"max",
 		"fit",
-		...C()
-	], M = () => [
-		U,
+		...w()
+	], N = () => [
+		V,
 		"screen",
 		"full",
 		"lh",
@@ -415,17 +382,17 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 		"min",
 		"max",
 		"fit",
-		...C()
-	], N = () => [
+		...w()
+	], P = () => [
 		e,
 		X,
 		J
-	], P = () => [
-		...y(),
-		Ce,
-		ve,
+	], ne = () => [
+		...b(),
+		ye,
+		he,
 		{ position: [X, J] }
-	], F = () => ["no-repeat", { repeat: [
+	], I = () => ["no-repeat", { repeat: [
 		"",
 		"x",
 		"y",
@@ -435,12 +402,12 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 		"auto",
 		"cover",
 		"contain",
-		we,
-		me,
+		be,
+		de,
 		{ size: [X, J] }
 	], ie = () => [
-		se,
-		xe,
+		oe,
+		Z,
 		Y
 	], L = () => [
 		"",
@@ -451,8 +418,8 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 		J
 	], R = () => [
 		"",
-		W,
-		xe,
+		H,
+		Z,
 		Y
 	], z = () => [
 		"solid",
@@ -477,34 +444,34 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 		"color",
 		"luminosity"
 	], B = () => [
-		W,
-		se,
-		Ce,
-		ve
-	], oe = () => [
+		H,
+		oe,
+		ye,
+		he
+	], ce = () => [
 		"",
 		"none",
 		m,
 		X,
 		J
-	], V = () => [
+	], G = () => [
 		"none",
-		W,
+		H,
 		X,
 		J
-	], H = () => [
+	], K = () => [
 		"none",
-		W,
-		X,
-		J
-	], le = () => [
-		W,
+		H,
 		X,
 		J
 	], q = () => [
-		U,
+		H,
+		X,
+		J
+	], Q = () => [
+		V,
 		"full",
-		...C()
+		...w()
 	];
 	return {
 		cacheSize: 500,
@@ -516,17 +483,17 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"bounce"
 			],
 			aspect: ["video"],
-			blur: [K],
-			breakpoint: [K],
-			color: [ce],
-			container: [K],
-			"drop-shadow": [K],
+			blur: [W],
+			breakpoint: [W],
+			color: [se],
+			container: [W],
+			"drop-shadow": [W],
 			ease: [
 				"in",
 				"out",
 				"in-out"
 			],
-			font: [fe],
+			font: [le],
 			"font-weight": [
 				"thin",
 				"extralight",
@@ -538,7 +505,7 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"extrabold",
 				"black"
 			],
-			"inset-shadow": [K],
+			"inset-shadow": [W],
 			leading: [
 				"none",
 				"tight",
@@ -555,11 +522,11 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"distant",
 				"none"
 			],
-			radius: [K],
-			shadow: [K],
-			spacing: ["px", W],
-			text: [K],
-			"text-shadow": [K],
+			radius: [W],
+			shadow: [W],
+			spacing: ["px", H],
+			text: [W],
+			"text-shadow": [W],
 			tracking: [
 				"tighter",
 				"tight",
@@ -573,7 +540,7 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 			aspect: [{ aspect: [
 				"auto",
 				"square",
-				U,
+				V,
 				J,
 				X,
 				g
@@ -586,15 +553,15 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				X,
 				J
 			] }],
-			"container-named": [pe],
+			"container-named": [ue],
 			columns: [{ columns: [
-				W,
+				H,
 				J,
 				X,
 				s
 			] }],
-			"break-after": [{ "break-after": v() }],
-			"break-before": [{ "break-before": v() }],
+			"break-after": [{ "break-after": y() }],
+			"break-before": [{ "break-before": y() }],
 			"break-inside": [{ "break-inside": [
 				"auto",
 				"avoid",
@@ -650,13 +617,13 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"none",
 				"scale-down"
 			] }],
-			"object-position": [{ object: b() }],
-			overflow: [{ overflow: x() }],
-			"overflow-x": [{ "overflow-x": x() }],
-			"overflow-y": [{ "overflow-y": x() }],
-			overscroll: [{ overscroll: S() }],
-			"overscroll-x": [{ "overscroll-x": S() }],
-			"overscroll-y": [{ "overscroll-y": S() }],
+			"object-position": [{ object: x() }],
+			overflow: [{ overflow: S() }],
+			"overflow-x": [{ "overflow-x": S() }],
+			"overflow-y": [{ "overflow-y": S() }],
+			overscroll: [{ overscroll: C() }],
+			"overscroll-x": [{ "overscroll-x": C() }],
+			"overscroll-y": [{ "overscroll-y": C() }],
 			position: [
 				"static",
 				"fixed",
@@ -664,40 +631,40 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"relative",
 				"sticky"
 			],
-			inset: [{ inset: w() }],
-			"inset-x": [{ "inset-x": w() }],
-			"inset-y": [{ "inset-y": w() }],
+			inset: [{ inset: T() }],
+			"inset-x": [{ "inset-x": T() }],
+			"inset-y": [{ "inset-y": T() }],
 			start: [{
-				"inset-s": w(),
-				start: w()
+				"inset-s": T(),
+				start: T()
 			}],
 			end: [{
-				"inset-e": w(),
-				end: w()
+				"inset-e": T(),
+				end: T()
 			}],
-			"inset-bs": [{ "inset-bs": w() }],
-			"inset-be": [{ "inset-be": w() }],
-			top: [{ top: w() }],
-			right: [{ right: w() }],
-			bottom: [{ bottom: w() }],
-			left: [{ left: w() }],
+			"inset-bs": [{ "inset-bs": T() }],
+			"inset-be": [{ "inset-be": T() }],
+			top: [{ top: T() }],
+			right: [{ right: T() }],
+			bottom: [{ bottom: T() }],
+			left: [{ left: T() }],
 			visibility: [
 				"visible",
 				"invisible",
 				"collapse"
 			],
 			z: [{ z: [
-				G,
+				U,
 				"auto",
 				X,
 				J
 			] }],
 			basis: [{ basis: [
-				U,
+				V,
 				"full",
 				"auto",
 				s,
-				...C()
+				...w()
 			] }],
 			"flex-direction": [{ flex: [
 				"row",
@@ -711,8 +678,8 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"wrap-reverse"
 			] }],
 			flex: [{ flex: [
-				W,
-				U,
+				H,
+				V,
 				"auto",
 				"initial",
 				"none",
@@ -720,32 +687,32 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 			] }],
 			grow: [{ grow: [
 				"",
-				W,
+				H,
 				X,
 				J
 			] }],
 			shrink: [{ shrink: [
 				"",
-				W,
+				H,
 				X,
 				J
 			] }],
 			order: [{ order: [
-				G,
+				U,
 				"first",
 				"last",
 				"none",
 				X,
 				J
 			] }],
-			"grid-cols": [{ "grid-cols": te() }],
-			"col-start-end": [{ col: T() }],
-			"col-start": [{ "col-start": E() }],
-			"col-end": [{ "col-end": E() }],
-			"grid-rows": [{ "grid-rows": te() }],
-			"row-start-end": [{ row: T() }],
-			"row-start": [{ "row-start": E() }],
-			"row-end": [{ "row-end": E() }],
+			"grid-cols": [{ "grid-cols": ee() }],
+			"col-start-end": [{ col: E() }],
+			"col-start": [{ "col-start": D() }],
+			"col-end": [{ "col-end": D() }],
+			"grid-rows": [{ "grid-rows": ee() }],
+			"row-start-end": [{ row: E() }],
+			"row-start": [{ "row-start": D() }],
+			"row-end": [{ "row-end": D() }],
 			"grid-flow": [{ "grid-flow": [
 				"row",
 				"col",
@@ -753,67 +720,67 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"row-dense",
 				"col-dense"
 			] }],
-			"auto-cols": [{ "auto-cols": ne() }],
-			"auto-rows": [{ "auto-rows": ne() }],
-			gap: [{ gap: C() }],
-			"gap-x": [{ "gap-x": C() }],
-			"gap-y": [{ "gap-y": C() }],
-			"justify-content": [{ justify: [...D(), "normal"] }],
-			"justify-items": [{ "justify-items": [...O(), "normal"] }],
-			"justify-self": [{ "justify-self": ["auto", ...O()] }],
-			"align-content": [{ content: ["normal", ...D()] }],
-			"align-items": [{ items: [...O(), { baseline: ["", "last"] }] }],
+			"auto-cols": [{ "auto-cols": te() }],
+			"auto-rows": [{ "auto-rows": te() }],
+			gap: [{ gap: w() }],
+			"gap-x": [{ "gap-x": w() }],
+			"gap-y": [{ "gap-y": w() }],
+			"justify-content": [{ justify: [...O(), "normal"] }],
+			"justify-items": [{ "justify-items": [...k(), "normal"] }],
+			"justify-self": [{ "justify-self": ["auto", ...k()] }],
+			"align-content": [{ content: ["normal", ...O()] }],
+			"align-items": [{ items: [...k(), { baseline: ["", "last"] }] }],
 			"align-self": [{ self: [
 				"auto",
-				...O(),
+				...k(),
 				{ baseline: ["", "last"] }
 			] }],
-			"place-content": [{ "place-content": D() }],
-			"place-items": [{ "place-items": [...O(), "baseline"] }],
-			"place-self": [{ "place-self": ["auto", ...O()] }],
-			p: [{ p: C() }],
-			px: [{ px: C() }],
-			py: [{ py: C() }],
-			ps: [{ ps: C() }],
-			pe: [{ pe: C() }],
-			pbs: [{ pbs: C() }],
-			pbe: [{ pbe: C() }],
-			pt: [{ pt: C() }],
-			pr: [{ pr: C() }],
-			pb: [{ pb: C() }],
-			pl: [{ pl: C() }],
-			m: [{ m: k() }],
-			mx: [{ mx: k() }],
-			my: [{ my: k() }],
-			ms: [{ ms: k() }],
-			me: [{ me: k() }],
-			mbs: [{ mbs: k() }],
-			mbe: [{ mbe: k() }],
-			mt: [{ mt: k() }],
-			mr: [{ mr: k() }],
-			mb: [{ mb: k() }],
-			ml: [{ ml: k() }],
-			"space-x": [{ "space-x": C() }],
+			"place-content": [{ "place-content": O() }],
+			"place-items": [{ "place-items": [...k(), "baseline"] }],
+			"place-self": [{ "place-self": ["auto", ...k()] }],
+			p: [{ p: w() }],
+			px: [{ px: w() }],
+			py: [{ py: w() }],
+			ps: [{ ps: w() }],
+			pe: [{ pe: w() }],
+			pbs: [{ pbs: w() }],
+			pbe: [{ pbe: w() }],
+			pt: [{ pt: w() }],
+			pr: [{ pr: w() }],
+			pb: [{ pb: w() }],
+			pl: [{ pl: w() }],
+			m: [{ m: A() }],
+			mx: [{ mx: A() }],
+			my: [{ my: A() }],
+			ms: [{ ms: A() }],
+			me: [{ me: A() }],
+			mbs: [{ mbs: A() }],
+			mbe: [{ mbe: A() }],
+			mt: [{ mt: A() }],
+			mr: [{ mr: A() }],
+			mb: [{ mb: A() }],
+			ml: [{ ml: A() }],
+			"space-x": [{ "space-x": w() }],
 			"space-x-reverse": ["space-x-reverse"],
-			"space-y": [{ "space-y": C() }],
+			"space-y": [{ "space-y": w() }],
 			"space-y-reverse": ["space-y-reverse"],
-			size: [{ size: A() }],
-			"inline-size": [{ inline: ["auto", ...j()] }],
-			"min-inline-size": [{ "min-inline": ["auto", ...j()] }],
-			"max-inline-size": [{ "max-inline": ["none", ...j()] }],
-			"block-size": [{ block: ["auto", ...M()] }],
-			"min-block-size": [{ "min-block": ["auto", ...M()] }],
-			"max-block-size": [{ "max-block": ["none", ...M()] }],
+			size: [{ size: j() }],
+			"inline-size": [{ inline: ["auto", ...M()] }],
+			"min-inline-size": [{ "min-inline": ["auto", ...M()] }],
+			"max-inline-size": [{ "max-inline": ["none", ...M()] }],
+			"block-size": [{ block: ["auto", ...N()] }],
+			"min-block-size": [{ "min-block": ["auto", ...N()] }],
+			"max-block-size": [{ "max-block": ["none", ...N()] }],
 			w: [{ w: [
 				s,
 				"screen",
-				...A()
+				...j()
 			] }],
 			"min-w": [{ "min-w": [
 				s,
 				"screen",
 				"none",
-				...A()
+				...j()
 			] }],
 			"max-w": [{ "max-w": [
 				s,
@@ -821,36 +788,36 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"none",
 				"prose",
 				{ screen: [o] },
-				...A()
+				...j()
 			] }],
 			h: [{ h: [
 				"screen",
 				"lh",
-				...A()
+				...j()
 			] }],
 			"min-h": [{ "min-h": [
 				"screen",
 				"lh",
 				"none",
-				...A()
+				...j()
 			] }],
 			"max-h": [{ "max-h": [
 				"screen",
 				"lh",
-				...A()
+				...j()
 			] }],
 			"font-size": [{ text: [
 				"base",
 				n,
-				xe,
+				Z,
 				Y
 			] }],
 			"font-smoothing": ["antialiased", "subpixel-antialiased"],
 			"font-style": ["italic", "not-italic"],
 			"font-weight": [{ font: [
 				r,
-				De,
-				ge
+				Ce,
+				pe
 			] }],
 			"font-stretch": [{ "font-stretch": [
 				"ultra-condensed",
@@ -862,12 +829,12 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"expanded",
 				"extra-expanded",
 				"ultra-expanded",
-				se,
+				oe,
 				J
 			] }],
 			"font-family": [{ font: [
-				Se,
-				_e,
+				ve,
+				me,
 				t
 			] }],
 			"font-features": [{ "font-features": [J] }],
@@ -883,12 +850,12 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				J
 			] }],
 			"line-clamp": [{ "line-clamp": [
-				W,
+				H,
 				"none",
 				X,
-				he
+				fe
 			] }],
-			leading: [{ leading: [a, ...C()] }],
+			leading: [{ leading: [a, ...w()] }],
 			"list-image": [{ "list-image": [
 				"none",
 				X,
@@ -910,8 +877,8 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"start",
 				"end"
 			] }],
-			"placeholder-color": [{ placeholder: N() }],
-			"text-color": [{ text: N() }],
+			"placeholder-color": [{ placeholder: P() }],
+			"text-color": [{ text: P() }],
 			"text-decoration": [
 				"underline",
 				"overline",
@@ -920,15 +887,15 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 			],
 			"text-decoration-style": [{ decoration: [...z(), "wavy"] }],
 			"text-decoration-thickness": [{ decoration: [
-				W,
+				H,
 				"from-font",
 				"auto",
 				X,
 				Y
 			] }],
-			"text-decoration-color": [{ decoration: N() }],
+			"text-decoration-color": [{ decoration: P() }],
 			"underline-offset": [{ "underline-offset": [
-				W,
+				H,
 				"auto",
 				X,
 				J
@@ -950,9 +917,9 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"balance",
 				"pretty"
 			] }],
-			indent: [{ indent: C() }],
+			indent: [{ indent: w() }],
 			"tab-size": [{ tab: [
-				G,
+				U,
 				X,
 				J
 			] }],
@@ -1013,8 +980,8 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"padding",
 				"content"
 			] }],
-			"bg-position": [{ bg: P() }],
-			"bg-repeat": [{ bg: F() }],
+			"bg-position": [{ bg: ne() }],
+			"bg-repeat": [{ bg: I() }],
 			"bg-size": [{ bg: re() }],
 			"bg-image": [{ bg: [
 				"none",
@@ -1030,7 +997,7 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 							"l",
 							"tl"
 						] },
-						G,
+						U,
 						X,
 						J
 					],
@@ -1040,21 +1007,21 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 						J
 					],
 					conic: [
-						G,
+						U,
 						X,
 						J
 					]
 				},
-				Te,
-				ye
+				xe,
+				ge
 			] }],
-			"bg-color": [{ bg: N() }],
+			"bg-color": [{ bg: P() }],
 			"gradient-from-pos": [{ from: ie() }],
 			"gradient-via-pos": [{ via: ie() }],
 			"gradient-to-pos": [{ to: ie() }],
-			"gradient-from": [{ from: N() }],
-			"gradient-via": [{ via: N() }],
-			"gradient-to": [{ to: N() }],
+			"gradient-from": [{ from: P() }],
+			"gradient-via": [{ via: P() }],
+			"gradient-to": [{ to: P() }],
 			rounded: [{ rounded: L() }],
 			"rounded-s": [{ "rounded-s": L() }],
 			"rounded-e": [{ "rounded-e": L() }],
@@ -1095,66 +1062,66 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"hidden",
 				"none"
 			] }],
-			"border-color": [{ border: N() }],
-			"border-color-x": [{ "border-x": N() }],
-			"border-color-y": [{ "border-y": N() }],
-			"border-color-s": [{ "border-s": N() }],
-			"border-color-e": [{ "border-e": N() }],
-			"border-color-bs": [{ "border-bs": N() }],
-			"border-color-be": [{ "border-be": N() }],
-			"border-color-t": [{ "border-t": N() }],
-			"border-color-r": [{ "border-r": N() }],
-			"border-color-b": [{ "border-b": N() }],
-			"border-color-l": [{ "border-l": N() }],
-			"divide-color": [{ divide: N() }],
+			"border-color": [{ border: P() }],
+			"border-color-x": [{ "border-x": P() }],
+			"border-color-y": [{ "border-y": P() }],
+			"border-color-s": [{ "border-s": P() }],
+			"border-color-e": [{ "border-e": P() }],
+			"border-color-bs": [{ "border-bs": P() }],
+			"border-color-be": [{ "border-be": P() }],
+			"border-color-t": [{ "border-t": P() }],
+			"border-color-r": [{ "border-r": P() }],
+			"border-color-b": [{ "border-b": P() }],
+			"border-color-l": [{ "border-l": P() }],
+			"divide-color": [{ divide: P() }],
 			"outline-style": [{ outline: [
 				...z(),
 				"none",
 				"hidden"
 			] }],
 			"outline-offset": [{ "outline-offset": [
-				W,
+				H,
 				X,
 				J
 			] }],
 			"outline-w": [{ outline: [
 				"",
-				W,
-				xe,
+				H,
+				Z,
 				Y
 			] }],
-			"outline-color": [{ outline: N() }],
+			"outline-color": [{ outline: P() }],
 			shadow: [{ shadow: [
 				"",
 				"none",
 				u,
-				Ee,
-				be
+				Se,
+				_e
 			] }],
-			"shadow-color": [{ shadow: N() }],
+			"shadow-color": [{ shadow: P() }],
 			"inset-shadow": [{ "inset-shadow": [
 				"none",
 				d,
-				Ee,
-				be
+				Se,
+				_e
 			] }],
-			"inset-shadow-color": [{ "inset-shadow": N() }],
+			"inset-shadow-color": [{ "inset-shadow": P() }],
 			"ring-w": [{ ring: R() }],
 			"ring-w-inset": ["ring-inset"],
-			"ring-color": [{ ring: N() }],
-			"ring-offset-w": [{ "ring-offset": [W, Y] }],
-			"ring-offset-color": [{ "ring-offset": N() }],
+			"ring-color": [{ ring: P() }],
+			"ring-offset-w": [{ "ring-offset": [H, Y] }],
+			"ring-offset-color": [{ "ring-offset": P() }],
 			"inset-ring-w": [{ "inset-ring": R() }],
-			"inset-ring-color": [{ "inset-ring": N() }],
+			"inset-ring-color": [{ "inset-ring": P() }],
 			"text-shadow": [{ "text-shadow": [
 				"none",
 				f,
-				Ee,
-				be
+				Se,
+				_e
 			] }],
-			"text-shadow-color": [{ "text-shadow": N() }],
+			"text-shadow-color": [{ "text-shadow": P() }],
 			opacity: [{ opacity: [
-				W,
+				H,
 				X,
 				J
 			] }],
@@ -1178,51 +1145,51 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"intersect",
 				"exclude"
 			] }],
-			"mask-image-linear-pos": [{ "mask-linear": [W] }],
+			"mask-image-linear-pos": [{ "mask-linear": [H] }],
 			"mask-image-linear-from-pos": [{ "mask-linear-from": B() }],
 			"mask-image-linear-to-pos": [{ "mask-linear-to": B() }],
-			"mask-image-linear-from-color": [{ "mask-linear-from": N() }],
-			"mask-image-linear-to-color": [{ "mask-linear-to": N() }],
+			"mask-image-linear-from-color": [{ "mask-linear-from": P() }],
+			"mask-image-linear-to-color": [{ "mask-linear-to": P() }],
 			"mask-image-t-from-pos": [{ "mask-t-from": B() }],
 			"mask-image-t-to-pos": [{ "mask-t-to": B() }],
-			"mask-image-t-from-color": [{ "mask-t-from": N() }],
-			"mask-image-t-to-color": [{ "mask-t-to": N() }],
+			"mask-image-t-from-color": [{ "mask-t-from": P() }],
+			"mask-image-t-to-color": [{ "mask-t-to": P() }],
 			"mask-image-r-from-pos": [{ "mask-r-from": B() }],
 			"mask-image-r-to-pos": [{ "mask-r-to": B() }],
-			"mask-image-r-from-color": [{ "mask-r-from": N() }],
-			"mask-image-r-to-color": [{ "mask-r-to": N() }],
+			"mask-image-r-from-color": [{ "mask-r-from": P() }],
+			"mask-image-r-to-color": [{ "mask-r-to": P() }],
 			"mask-image-b-from-pos": [{ "mask-b-from": B() }],
 			"mask-image-b-to-pos": [{ "mask-b-to": B() }],
-			"mask-image-b-from-color": [{ "mask-b-from": N() }],
-			"mask-image-b-to-color": [{ "mask-b-to": N() }],
+			"mask-image-b-from-color": [{ "mask-b-from": P() }],
+			"mask-image-b-to-color": [{ "mask-b-to": P() }],
 			"mask-image-l-from-pos": [{ "mask-l-from": B() }],
 			"mask-image-l-to-pos": [{ "mask-l-to": B() }],
-			"mask-image-l-from-color": [{ "mask-l-from": N() }],
-			"mask-image-l-to-color": [{ "mask-l-to": N() }],
+			"mask-image-l-from-color": [{ "mask-l-from": P() }],
+			"mask-image-l-to-color": [{ "mask-l-to": P() }],
 			"mask-image-x-from-pos": [{ "mask-x-from": B() }],
 			"mask-image-x-to-pos": [{ "mask-x-to": B() }],
-			"mask-image-x-from-color": [{ "mask-x-from": N() }],
-			"mask-image-x-to-color": [{ "mask-x-to": N() }],
+			"mask-image-x-from-color": [{ "mask-x-from": P() }],
+			"mask-image-x-to-color": [{ "mask-x-to": P() }],
 			"mask-image-y-from-pos": [{ "mask-y-from": B() }],
 			"mask-image-y-to-pos": [{ "mask-y-to": B() }],
-			"mask-image-y-from-color": [{ "mask-y-from": N() }],
-			"mask-image-y-to-color": [{ "mask-y-to": N() }],
+			"mask-image-y-from-color": [{ "mask-y-from": P() }],
+			"mask-image-y-to-color": [{ "mask-y-to": P() }],
 			"mask-image-radial": [{ "mask-radial": [X, J] }],
 			"mask-image-radial-from-pos": [{ "mask-radial-from": B() }],
 			"mask-image-radial-to-pos": [{ "mask-radial-to": B() }],
-			"mask-image-radial-from-color": [{ "mask-radial-from": N() }],
-			"mask-image-radial-to-color": [{ "mask-radial-to": N() }],
+			"mask-image-radial-from-color": [{ "mask-radial-from": P() }],
+			"mask-image-radial-to-color": [{ "mask-radial-to": P() }],
 			"mask-image-radial-shape": [{ "mask-radial": ["circle", "ellipse"] }],
 			"mask-image-radial-size": [{ "mask-radial": [{
 				closest: ["side", "corner"],
 				farthest: ["side", "corner"]
 			}] }],
-			"mask-image-radial-pos": [{ "mask-radial-at": y() }],
-			"mask-image-conic-pos": [{ "mask-conic": [W] }],
+			"mask-image-radial-pos": [{ "mask-radial-at": b() }],
+			"mask-image-conic-pos": [{ "mask-conic": [H] }],
 			"mask-image-conic-from-pos": [{ "mask-conic-from": B() }],
 			"mask-image-conic-to-pos": [{ "mask-conic-to": B() }],
-			"mask-image-conic-from-color": [{ "mask-conic-from": N() }],
-			"mask-image-conic-to-color": [{ "mask-conic-to": N() }],
+			"mask-image-conic-from-color": [{ "mask-conic-from": P() }],
+			"mask-image-conic-to-color": [{ "mask-conic-to": P() }],
 			"mask-mode": [{ mask: [
 				"alpha",
 				"luminance",
@@ -1236,8 +1203,8 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"stroke",
 				"view"
 			] }],
-			"mask-position": [{ mask: P() }],
-			"mask-repeat": [{ mask: F() }],
+			"mask-position": [{ mask: ne() }],
+			"mask-repeat": [{ mask: I() }],
 			"mask-size": [{ mask: re() }],
 			"mask-type": [{ "mask-type": ["alpha", "luminance"] }],
 			"mask-image": [{ mask: [
@@ -1251,14 +1218,14 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				X,
 				J
 			] }],
-			blur: [{ blur: oe() }],
+			blur: [{ blur: ce() }],
 			brightness: [{ brightness: [
-				W,
+				H,
 				X,
 				J
 			] }],
 			contrast: [{ contrast: [
-				W,
+				H,
 				X,
 				J
 			] }],
@@ -1266,35 +1233,35 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"",
 				"none",
 				p,
-				Ee,
-				be
+				Se,
+				_e
 			] }],
-			"drop-shadow-color": [{ "drop-shadow": N() }],
+			"drop-shadow-color": [{ "drop-shadow": P() }],
 			grayscale: [{ grayscale: [
 				"",
-				W,
+				H,
 				X,
 				J
 			] }],
 			"hue-rotate": [{ "hue-rotate": [
-				W,
+				H,
 				X,
 				J
 			] }],
 			invert: [{ invert: [
 				"",
-				W,
+				H,
 				X,
 				J
 			] }],
 			saturate: [{ saturate: [
-				W,
+				H,
 				X,
 				J
 			] }],
 			sepia: [{ sepia: [
 				"",
-				W,
+				H,
 				X,
 				J
 			] }],
@@ -1304,54 +1271,54 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				X,
 				J
 			] }],
-			"backdrop-blur": [{ "backdrop-blur": oe() }],
+			"backdrop-blur": [{ "backdrop-blur": ce() }],
 			"backdrop-brightness": [{ "backdrop-brightness": [
-				W,
+				H,
 				X,
 				J
 			] }],
 			"backdrop-contrast": [{ "backdrop-contrast": [
-				W,
+				H,
 				X,
 				J
 			] }],
 			"backdrop-grayscale": [{ "backdrop-grayscale": [
 				"",
-				W,
+				H,
 				X,
 				J
 			] }],
 			"backdrop-hue-rotate": [{ "backdrop-hue-rotate": [
-				W,
+				H,
 				X,
 				J
 			] }],
 			"backdrop-invert": [{ "backdrop-invert": [
 				"",
-				W,
+				H,
 				X,
 				J
 			] }],
 			"backdrop-opacity": [{ "backdrop-opacity": [
-				W,
+				H,
 				X,
 				J
 			] }],
 			"backdrop-saturate": [{ "backdrop-saturate": [
-				W,
+				H,
 				X,
 				J
 			] }],
 			"backdrop-sepia": [{ "backdrop-sepia": [
 				"",
-				W,
+				H,
 				X,
 				J
 			] }],
 			"border-collapse": [{ border: ["collapse", "separate"] }],
-			"border-spacing": [{ "border-spacing": C() }],
-			"border-spacing-x": [{ "border-spacing-x": C() }],
-			"border-spacing-y": [{ "border-spacing-y": C() }],
+			"border-spacing": [{ "border-spacing": w() }],
+			"border-spacing-x": [{ "border-spacing-x": w() }],
+			"border-spacing-y": [{ "border-spacing-y": w() }],
 			"table-layout": [{ table: ["auto", "fixed"] }],
 			caption: [{ caption: ["top", "bottom"] }],
 			transition: [{ transition: [
@@ -1367,7 +1334,7 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 			] }],
 			"transition-behavior": [{ transition: ["normal", "discrete"] }],
 			duration: [{ duration: [
-				W,
+				H,
 				"initial",
 				X,
 				J
@@ -1375,18 +1342,18 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 			ease: [{ ease: [
 				"linear",
 				"initial",
-				ee,
+				_,
 				X,
 				J
 			] }],
 			delay: [{ delay: [
-				W,
+				H,
 				X,
 				J
 			] }],
 			animate: [{ animate: [
 				"none",
-				_,
+				v,
 				X,
 				J
 			] }],
@@ -1396,19 +1363,19 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				X,
 				J
 			] }],
-			"perspective-origin": [{ "perspective-origin": b() }],
-			rotate: [{ rotate: V() }],
-			"rotate-x": [{ "rotate-x": V() }],
-			"rotate-y": [{ "rotate-y": V() }],
-			"rotate-z": [{ "rotate-z": V() }],
-			scale: [{ scale: H() }],
-			"scale-x": [{ "scale-x": H() }],
-			"scale-y": [{ "scale-y": H() }],
-			"scale-z": [{ "scale-z": H() }],
+			"perspective-origin": [{ "perspective-origin": x() }],
+			rotate: [{ rotate: G() }],
+			"rotate-x": [{ "rotate-x": G() }],
+			"rotate-y": [{ "rotate-y": G() }],
+			"rotate-z": [{ "rotate-z": G() }],
+			scale: [{ scale: K() }],
+			"scale-x": [{ "scale-x": K() }],
+			"scale-y": [{ "scale-y": K() }],
+			"scale-z": [{ "scale-z": K() }],
 			"scale-3d": ["scale-3d"],
-			skew: [{ skew: le() }],
-			"skew-x": [{ "skew-x": le() }],
-			"skew-y": [{ "skew-y": le() }],
+			skew: [{ skew: q() }],
+			"skew-x": [{ "skew-x": q() }],
+			"skew-y": [{ "skew-y": q() }],
 			transform: [{ transform: [
 				X,
 				J,
@@ -1417,21 +1384,21 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"gpu",
 				"cpu"
 			] }],
-			"transform-origin": [{ origin: b() }],
+			"transform-origin": [{ origin: x() }],
 			"transform-style": [{ transform: ["3d", "flat"] }],
-			translate: [{ translate: q() }],
-			"translate-x": [{ "translate-x": q() }],
-			"translate-y": [{ "translate-y": q() }],
-			"translate-z": [{ "translate-z": q() }],
+			translate: [{ translate: Q() }],
+			"translate-x": [{ "translate-x": Q() }],
+			"translate-y": [{ "translate-y": Q() }],
+			"translate-z": [{ "translate-z": Q() }],
 			"translate-none": ["translate-none"],
 			zoom: [{ zoom: [
-				G,
+				U,
 				X,
 				J
 			] }],
-			accent: [{ accent: N() }],
+			accent: [{ accent: P() }],
 			appearance: [{ appearance: ["none", "auto"] }],
-			"caret-color": [{ caret: N() }],
+			"caret-color": [{ caret: P() }],
 			"color-scheme": [{ scheme: [
 				"normal",
 				"dark",
@@ -1489,8 +1456,8 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"x"
 			] }],
 			"scroll-behavior": [{ scroll: ["auto", "smooth"] }],
-			"scrollbar-thumb-color": [{ "scrollbar-thumb": N() }],
-			"scrollbar-track-color": [{ "scrollbar-track": N() }],
+			"scrollbar-thumb-color": [{ "scrollbar-thumb": P() }],
+			"scrollbar-track-color": [{ "scrollbar-track": P() }],
 			"scrollbar-gutter": [{ "scrollbar-gutter": [
 				"auto",
 				"stable",
@@ -1501,28 +1468,28 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				"thin",
 				"none"
 			] }],
-			"scroll-m": [{ "scroll-m": C() }],
-			"scroll-mx": [{ "scroll-mx": C() }],
-			"scroll-my": [{ "scroll-my": C() }],
-			"scroll-ms": [{ "scroll-ms": C() }],
-			"scroll-me": [{ "scroll-me": C() }],
-			"scroll-mbs": [{ "scroll-mbs": C() }],
-			"scroll-mbe": [{ "scroll-mbe": C() }],
-			"scroll-mt": [{ "scroll-mt": C() }],
-			"scroll-mr": [{ "scroll-mr": C() }],
-			"scroll-mb": [{ "scroll-mb": C() }],
-			"scroll-ml": [{ "scroll-ml": C() }],
-			"scroll-p": [{ "scroll-p": C() }],
-			"scroll-px": [{ "scroll-px": C() }],
-			"scroll-py": [{ "scroll-py": C() }],
-			"scroll-ps": [{ "scroll-ps": C() }],
-			"scroll-pe": [{ "scroll-pe": C() }],
-			"scroll-pbs": [{ "scroll-pbs": C() }],
-			"scroll-pbe": [{ "scroll-pbe": C() }],
-			"scroll-pt": [{ "scroll-pt": C() }],
-			"scroll-pr": [{ "scroll-pr": C() }],
-			"scroll-pb": [{ "scroll-pb": C() }],
-			"scroll-pl": [{ "scroll-pl": C() }],
+			"scroll-m": [{ "scroll-m": w() }],
+			"scroll-mx": [{ "scroll-mx": w() }],
+			"scroll-my": [{ "scroll-my": w() }],
+			"scroll-ms": [{ "scroll-ms": w() }],
+			"scroll-me": [{ "scroll-me": w() }],
+			"scroll-mbs": [{ "scroll-mbs": w() }],
+			"scroll-mbe": [{ "scroll-mbe": w() }],
+			"scroll-mt": [{ "scroll-mt": w() }],
+			"scroll-mr": [{ "scroll-mr": w() }],
+			"scroll-mb": [{ "scroll-mb": w() }],
+			"scroll-ml": [{ "scroll-ml": w() }],
+			"scroll-p": [{ "scroll-p": w() }],
+			"scroll-px": [{ "scroll-px": w() }],
+			"scroll-py": [{ "scroll-py": w() }],
+			"scroll-ps": [{ "scroll-ps": w() }],
+			"scroll-pe": [{ "scroll-pe": w() }],
+			"scroll-pbs": [{ "scroll-pbs": w() }],
+			"scroll-pbe": [{ "scroll-pbe": w() }],
+			"scroll-pt": [{ "scroll-pt": w() }],
+			"scroll-pr": [{ "scroll-pr": w() }],
+			"scroll-pb": [{ "scroll-pb": w() }],
+			"scroll-pl": [{ "scroll-pl": w() }],
 			"snap-align": [{ snap: [
 				"start",
 				"end",
@@ -1567,14 +1534,14 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 				X,
 				J
 			] }],
-			fill: [{ fill: ["none", ...N()] }],
+			fill: [{ fill: ["none", ...P()] }],
 			"stroke-w": [{ stroke: [
-				W,
-				xe,
+				H,
+				Z,
 				Y,
-				he
+				fe
 			] }],
-			stroke: [{ stroke: ["none", ...N()] }],
+			stroke: [{ stroke: ["none", ...P()] }],
 			"forced-color-adjust": [{ "forced-color-adjust": ["auto", "none"] }]
 		},
 		conflictingClassGroups: {
@@ -1763,272 +1730,279 @@ var a = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, o = i, s = (e
 });
 //#endregion
 //#region src/utils.ts
-function Le(...e) {
-	return Ie(i(e));
+function Ne(...e) {
+	return Me(i(e));
 }
 //#endregion
-//#region node_modules/react/cjs/react-jsx-runtime.production.js
-var Re = /* @__PURE__ */ t(((e) => {
-	var t = Symbol.for("react.transitional.element"), n = Symbol.for("react.fragment");
-	function r(e, n, r) {
-		var i = null;
-		if (r !== void 0 && (i = "" + r), n.key !== void 0 && (i = "" + n.key), "key" in n) for (var a in r = {}, n) a !== "key" && (r[a] = n[a]);
-		else r = n;
-		return n = r.ref, {
-			$$typeof: t,
-			type: e,
-			key: i,
-			ref: n === void 0 ? null : n,
-			props: r
-		};
-	}
-	e.Fragment = n, e.jsx = r, e.jsxs = r;
-})), ze = /* @__PURE__ */ t(((e) => {
-	process.env.NODE_ENV !== "production" && (function() {
-		function t(e) {
-			if (e == null) return null;
-			if (typeof e == "function") return e.$$typeof === ne ? null : e.displayName || e.name || null;
-			if (typeof e == "string") return e;
-			switch (e) {
-				case _: return "Fragment";
-				case y: return "Profiler";
-				case v: return "StrictMode";
-				case C: return "Suspense";
-				case w: return "SuspenseList";
-				case E: return "Activity";
-			}
-			if (typeof e == "object") switch (typeof e.tag == "number" && console.error("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), e.$$typeof) {
-				case ee: return "Portal";
-				case x: return e.displayName || "Context";
-				case b: return (e._context.displayName || "Context") + ".Consumer";
-				case S:
-					var n = e.render;
-					return e = e.displayName, e ||= (e = n.displayName || n.name || "", e === "" ? "ForwardRef" : "ForwardRef(" + e + ")"), e;
-				case te: return n = e.displayName || null, n === null ? t(e.type) || "Memo" : n;
-				case T:
-					n = e._payload, e = e._init;
-					try {
-						return t(e(n));
-					} catch {}
-			}
-			return null;
-		}
-		function r(e) {
-			return "" + e;
-		}
-		function i(e) {
-			try {
-				r(e);
-				var t = !1;
-			} catch {
-				t = !0;
-			}
-			if (t) {
-				t = console;
-				var n = t.error, i = typeof Symbol == "function" && Symbol.toStringTag && e[Symbol.toStringTag] || e.constructor.name || "Object";
-				return n.call(t, "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.", i), r(e);
-			}
-		}
-		function a(e) {
-			if (e === _) return "<>";
-			if (typeof e == "object" && e && e.$$typeof === T) return "<...>";
-			try {
-				var n = t(e);
-				return n ? "<" + n + ">" : "<...>";
-			} catch {
-				return "<...>";
-			}
-		}
-		function o() {
-			var e = D.A;
-			return e === null ? null : e.getOwner();
-		}
-		function s() {
-			return Error("react-stack-top-frame");
-		}
-		function c(e) {
-			if (O.call(e, "key")) {
-				var t = Object.getOwnPropertyDescriptor(e, "key").get;
-				if (t && t.isReactWarning) return !1;
-			}
-			return e.key !== void 0;
-		}
-		function l(e, t) {
-			function n() {
-				j || (j = !0, console.error("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)", t));
-			}
-			n.isReactWarning = !0, Object.defineProperty(e, "key", {
-				get: n,
-				configurable: !0
-			});
-		}
-		function u() {
-			var e = t(this.type);
-			return M[e] || (M[e] = !0, console.error("Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release.")), e = this.props.ref, e === void 0 ? null : e;
-		}
-		function d(e, t, n, r, i, a) {
-			var o = n.ref;
-			return e = {
-				$$typeof: g,
-				type: e,
-				key: t,
-				props: n,
-				_owner: r
-			}, (o === void 0 ? null : o) === null ? Object.defineProperty(e, "ref", {
-				enumerable: !1,
-				value: null
-			}) : Object.defineProperty(e, "ref", {
-				enumerable: !1,
-				get: u
-			}), e._store = {}, Object.defineProperty(e._store, "validated", {
-				configurable: !1,
-				enumerable: !1,
-				writable: !0,
-				value: 0
-			}), Object.defineProperty(e, "_debugInfo", {
-				configurable: !1,
-				enumerable: !1,
-				writable: !0,
-				value: null
-			}), Object.defineProperty(e, "_debugStack", {
-				configurable: !1,
-				enumerable: !1,
-				writable: !0,
-				value: i
-			}), Object.defineProperty(e, "_debugTask", {
-				configurable: !1,
-				enumerable: !1,
-				writable: !0,
-				value: a
-			}), Object.freeze && (Object.freeze(e.props), Object.freeze(e)), e;
-		}
-		function f(e, n, r, a, s, u) {
-			var f = n.children;
-			if (f !== void 0) if (a) if (k(f)) {
-				for (a = 0; a < f.length; a++) p(f[a]);
-				Object.freeze && Object.freeze(f);
-			} else console.error("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
-			else p(f);
-			if (O.call(n, "key")) {
-				f = t(e);
-				var m = Object.keys(n).filter(function(e) {
-					return e !== "key";
-				});
-				a = 0 < m.length ? "{key: someKey, " + m.join(": ..., ") + ": ...}" : "{key: someKey}", F[f + a] || (m = 0 < m.length ? "{" + m.join(": ..., ") + ": ...}" : "{}", console.error("A props object containing a \"key\" prop is being spread into JSX:\n  let props = %s;\n  <%s {...props} />\nReact keys must be passed directly to JSX without using spread:\n  let props = %s;\n  <%s key={someKey} {...props} />", a, f, m, f), F[f + a] = !0);
-			}
-			if (f = null, r !== void 0 && (i(r), f = "" + r), c(n) && (i(n.key), f = "" + n.key), "key" in n) for (var h in r = {}, n) h !== "key" && (r[h] = n[h]);
-			else r = n;
-			return f && l(r, typeof e == "function" ? e.displayName || e.name || "Unknown" : e), d(e, f, r, o(), s, u);
-		}
-		function p(e) {
-			m(e) ? e._store && (e._store.validated = 1) : typeof e == "object" && e && e.$$typeof === T && (e._payload.status === "fulfilled" ? m(e._payload.value) && e._payload.value._store && (e._payload.value._store.validated = 1) : e._store && (e._store.validated = 1));
-		}
-		function m(e) {
-			return typeof e == "object" && !!e && e.$$typeof === g;
-		}
-		var h = n("react"), g = Symbol.for("react.transitional.element"), ee = Symbol.for("react.portal"), _ = Symbol.for("react.fragment"), v = Symbol.for("react.strict_mode"), y = Symbol.for("react.profiler"), b = Symbol.for("react.consumer"), x = Symbol.for("react.context"), S = Symbol.for("react.forward_ref"), C = Symbol.for("react.suspense"), w = Symbol.for("react.suspense_list"), te = Symbol.for("react.memo"), T = Symbol.for("react.lazy"), E = Symbol.for("react.activity"), ne = Symbol.for("react.client.reference"), D = h.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, O = Object.prototype.hasOwnProperty, k = Array.isArray, A = console.createTask ? console.createTask : function() {
-			return null;
-		};
-		h = { react_stack_bottom_frame: function(e) {
-			return e();
-		} };
-		var j, M = {}, N = h.react_stack_bottom_frame.bind(h, s)(), P = A(a(s)), F = {};
-		e.Fragment = _, e.jsx = function(e, t, n) {
-			var r = 1e4 > D.recentlyCreatedOwnerStacks++;
-			return f(e, t, n, !1, r ? Error("react-stack-top-frame") : N, r ? A(a(e)) : P);
-		}, e.jsxs = function(e, t, n) {
-			var r = 1e4 > D.recentlyCreatedOwnerStacks++;
-			return f(e, t, n, !0, r ? Error("react-stack-top-frame") : N, r ? A(a(e)) : P);
-		};
-	})();
-})), $ = (/* @__PURE__ */ t(((e, t) => {
-	process.env.NODE_ENV === "production" ? t.exports = Re() : t.exports = ze();
-})))(), Be = s("inline-flex items-center justify-center rounded-2xl h-14 relative text-xl font-semibold group overflow-hidden transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2", {
+//#region node_modules/class-variance-authority/dist/index.mjs
+var Pe = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, Fe = i, Ie = ((e, t) => (n) => {
+	if (t?.variants == null) return Fe(e, n?.class, n?.className);
+	let { variants: r, defaultVariants: i } = t, a = Object.keys(r).map((e) => {
+		let t = n?.[e], a = i?.[e];
+		if (t === null) return null;
+		let o = Pe(t) || Pe(a);
+		return r[e][o];
+	}), o = n && Object.entries(n).reduce((e, t) => {
+		let [n, r] = t;
+		return r === void 0 || (e[n] = r), e;
+	}, {});
+	return Fe(e, a, t?.compoundVariants?.reduce((e, t) => {
+		let { class: n, className: r, ...a } = t;
+		return Object.entries(a).every((e) => {
+			let [t, n] = e;
+			return Array.isArray(n) ? n.includes({
+				...i,
+				...o
+			}[t]) : {
+				...i,
+				...o
+			}[t] === n;
+		}) ? [
+			...e,
+			n,
+			r
+		] : e;
+	}, []), n?.class, n?.className);
+})([
+	"inline-flex items-center justify-center gap-2 whitespace-nowrap",
+	"font-semibold select-none",
+	"rounded-lg",
+	"transition-all duration-200 ease-out",
+	"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-current",
+	"disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed",
+	"[aria-busy=true]:cursor-wait",
+	"motion-safe:transition-all motion-reduce:transition-none"
+].join(" "), {
 	variants: {
 		variant: {
-			default: "bg-white text-black hover:bg-gray-100 shadow-md focus:ring-gray-300",
-			destructive: "bg-red-500 text-white hover:bg-red-600 shadow-md focus:ring-red-500",
-			outline: "bg-transparent border-2 border-black text-black hover:bg-black hover:text-white focus:ring-black",
-			ghost: "bg-transparent text-black hover:bg-black/10 focus:ring-gray-400",
-			glass: "bg-white/20 backdrop-blur-md border border-white/30 text-black shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:bg-white/30 focus:ring-white/50",
-			gradient: "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:ring-purple-500",
-			neumorphic: "bg-[#e0e5ec] text-gray-700 shadow-[9px_9px_16px_rgb(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)] hover:shadow-[inset_6px_6px_10px_0_rgba(163,177,198,0.7),inset_-6px_-6px_10px_0_rgba(255,255,255,0.8)] border-none focus:ring-gray-400"
+			solid: [
+				"bg-indigo-600 text-white shadow-sm",
+				"hover:bg-indigo-700 hover:shadow-md hover:-translate-y-px",
+				"active:translate-y-0 active:shadow-sm"
+			].join(" "),
+			outline: [
+				"border-2 border-indigo-600 text-indigo-600 bg-transparent",
+				"hover:bg-indigo-600 hover:text-white",
+				"active:bg-indigo-700"
+			].join(" "),
+			ghost: [
+				"bg-transparent text-indigo-600",
+				"hover:bg-indigo-50 hover:text-indigo-700",
+				"active:bg-indigo-100"
+			].join(" "),
+			soft: [
+				"bg-indigo-100 text-indigo-700",
+				"hover:bg-indigo-200 hover:text-indigo-800",
+				"active:bg-indigo-300"
+			].join(" "),
+			destructive: [
+				"bg-red-600 text-white shadow-sm",
+				"hover:bg-red-700 hover:shadow-md",
+				"active:bg-red-800 active:shadow-sm"
+			].join(" "),
+			gradient: [
+				"bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-md",
+				"hover:shadow-lg hover:-translate-y-0.5 hover:brightness-110",
+				"active:translate-y-0 active:brightness-100"
+			].join(" "),
+			"gradient-shift": [
+				"btnx-gradient-shift text-white shadow-md",
+				"hover:shadow-lg hover:-translate-y-0.5",
+				"active:translate-y-0"
+			].join(" "),
+			glass: [
+				"bg-white/20 backdrop-blur-md border border-white/30 text-white",
+				"shadow-[0_4px_30px_rgba(0,0,0,0.15)]",
+				"hover:bg-white/30 hover:border-white/50 hover:shadow-[0_8px_32px_rgba(0,0,0,0.2)]",
+				"active:bg-white/15"
+			].join(" "),
+			neumorphic: [
+				"bg-[#e0e5ec] text-gray-600",
+				"shadow-[6px_6px_12px_rgba(163,177,198,0.6),-6px_-6px_12px_rgba(255,255,255,0.8)]",
+				"hover:shadow-[8px_8px_16px_rgba(163,177,198,0.7),-8px_-8px_16px_rgba(255,255,255,0.9)]",
+				"active:shadow-[inset_4px_4px_8px_rgba(163,177,198,0.6),inset_-4px_-4px_8px_rgba(255,255,255,0.8)]"
+			].join(" "),
+			shimmer: [
+				"btnx-shimmer bg-indigo-600 text-white shadow-md overflow-hidden",
+				"hover:shadow-lg hover:-translate-y-0.5",
+				"active:translate-y-0"
+			].join(" "),
+			"border-beam": [
+				"btnx-border-beam bg-transparent text-indigo-600 relative overflow-hidden",
+				"hover:text-white",
+				"active:brightness-90"
+			].join(" "),
+			glow: [
+				"bg-indigo-600 text-white",
+				"shadow-[0_0_0_0_rgba(99,102,241,0.4)]",
+				"hover:shadow-[0_0_20px_8px_rgba(99,102,241,0.5)] hover:-translate-y-0.5",
+				"active:translate-y-0 active:shadow-[0_0_10px_4px_rgba(99,102,241,0.4)]"
+			].join(" "),
+			magnetic: [
+				"bg-gray-900 text-white shadow-md",
+				"hover:shadow-xl hover:-translate-y-1.5 hover:scale-105",
+				"active:translate-y-0 active:scale-100 active:shadow-md"
+			].join(" "),
+			ripple: [
+				"btnx-ripple bg-indigo-600 text-white shadow-sm relative overflow-hidden",
+				"hover:bg-indigo-700",
+				"active:scale-95"
+			].join(" "),
+			bounce: [
+				"bg-emerald-500 text-white shadow-md",
+				"hover:animate-none hover:bg-emerald-600 hover:-translate-y-1",
+				"active:translate-y-0",
+				"btnx-bounce"
+			].join(" "),
+			jelly: [
+				"bg-violet-500 text-white shadow-md",
+				"btnx-jelly",
+				"active:scale-95"
+			].join(" "),
+			"slide-fill": [
+				"btnx-slide-fill border-2 border-indigo-600 text-indigo-600 relative overflow-hidden",
+				"hover:text-white",
+				"active:brightness-90"
+			].join(" "),
+			"underline-reveal": [
+				"bg-transparent text-gray-800 relative",
+				"btnx-underline-reveal",
+				"hover:text-indigo-600",
+				"active:text-indigo-800"
+			].join(" "),
+			"split-reveal": [
+				"btnx-split-reveal bg-indigo-600 text-white shadow-md relative overflow-hidden",
+				"hover:shadow-lg",
+				"active:scale-95"
+			].join(" "),
+			"3d-press": [
+				"bg-indigo-600 text-white",
+				"shadow-[0_6px_0_rgba(55,48,163,1)] border border-indigo-700",
+				"hover:shadow-[0_4px_0_rgba(55,48,163,1)] hover:translate-y-0.5",
+				"active:shadow-[0_2px_0_rgba(55,48,163,1)] active:translate-y-1"
+			].join(" "),
+			neon: [
+				"bg-black text-cyan-400 border border-cyan-400",
+				"shadow-[0_0_6px_0_rgba(34,211,238,0.3),inset_0_0_6px_0_rgba(34,211,238,0.1)]",
+				"hover:text-black hover:bg-cyan-400",
+				"hover:shadow-[0_0_20px_6px_rgba(34,211,238,0.6),inset_0_0_12px_0_rgba(34,211,238,0.2)]",
+				"active:scale-95"
+			].join(" "),
+			aurora: [
+				"btnx-aurora text-white shadow-lg relative overflow-hidden",
+				"hover:shadow-xl hover:-translate-y-0.5 hover:brightness-110",
+				"active:translate-y-0 active:brightness-100"
+			].join(" ")
 		},
 		size: {
-			default: "w-48 px-6",
-			sm: "w-32 px-4 h-10 text-sm rounded-xl",
-			lg: "w-64 px-8 h-16 text-2xl rounded-3xl",
-			full: "w-full px-6"
+			xs: "h-7 px-3 text-xs rounded-md gap-1",
+			sm: "h-8 px-4 text-sm rounded-md gap-1.5",
+			default: "h-10 px-5 text-sm",
+			lg: "h-12 px-6 text-base rounded-xl",
+			xl: "h-14 px-8 text-lg rounded-xl",
+			icon: "h-10 w-10 p-0 rounded-lg"
 		}
 	},
 	defaultVariants: {
-		variant: "default",
+		variant: "solid",
 		size: "default"
 	}
-}), Ve = s("rounded-xl h-[calc(100%-8px)] flex items-center justify-center absolute top-[4px] z-10 duration-500 ease-[cubic-bezier(0.5,0,0,1)]", {
-	variants: {
-		variant: {
-			default: "",
-			destructive: "",
-			outline: "hidden",
-			ghost: "hidden",
-			glass: "bg-white/40",
-			gradient: "bg-white/20 backdrop-blur-sm",
-			neumorphic: "bg-[#e0e5ec] shadow-[inset_2px_2px_5px_rgba(163,177,198,0.5),inset_-2px_-2px_5px_rgba(255,255,255,0.8)]"
+}), Le = () => /* @__PURE__ */ t("span", {
+	className: "btnx-spinner",
+	"aria-hidden": "true"
+}), Re = ({ state: e }) => e === "success" ? /* @__PURE__ */ t("span", {
+	className: "btnx-state-icon",
+	"aria-hidden": "true",
+	children: /* @__PURE__ */ t("svg", {
+		xmlns: "http://www.w3.org/2000/svg",
+		viewBox: "0 0 20 20",
+		fill: "currentColor",
+		width: "1em",
+		height: "1em",
+		children: /* @__PURE__ */ t("path", {
+			fillRule: "evenodd",
+			d: "M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z",
+			clipRule: "evenodd"
+		})
+	})
+}) : e === "error" ? /* @__PURE__ */ t("span", {
+	className: "btnx-state-icon",
+	"aria-hidden": "true",
+	children: /* @__PURE__ */ t("svg", {
+		xmlns: "http://www.w3.org/2000/svg",
+		viewBox: "0 0 20 20",
+		fill: "currentColor",
+		width: "1em",
+		height: "1em",
+		children: /* @__PURE__ */ t("path", { d: "M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" })
+	})
+}) : null;
+function ze(e, t) {
+	if (t) return;
+	let n = e.currentTarget, r = n.getBoundingClientRect(), i = Math.max(r.width, r.height), a = i / 2, o = document.createElement("span");
+	o.className = "btnx-ripple-wave", o.style.cssText = `
+    width: ${i}px;
+    height: ${i}px;
+    left: ${e.clientX - r.left - a}px;
+    top: ${e.clientY - r.top - a}px;
+  `, n.appendChild(o), o.addEventListener("animationend", () => o.remove(), { once: !0 });
+}
+var Be = e.forwardRef(({ className: r, variant: i = "solid", size: a = "default", isLoading: o = !1, loadingText: s = "Loading…", state: c = "idle", color: l, disableAnimation: u = !1, leftIcon: d, rightIcon: f, children: p, disabled: m, onClick: h, style: g, type: _ = "button", ...v }, y) => {
+	let b = m || o, x = o, S = c === "success" || c === "error", C = l ? {
+		"--btnx-shimmer-color": l,
+		"--btnx-beam-color": l,
+		"--btnx-ripple-color": l
+	} : {}, w = e.useCallback((e) => {
+		i === "ripple" && !u && ze(e, typeof window < "u" && window.matchMedia("(prefers-reduced-motion: reduce)").matches), h?.(e);
+	}, [
+		i,
+		u,
+		h
+	]);
+	return /* @__PURE__ */ n("button", {
+		ref: y,
+		type: _,
+		className: Ne(Ie({
+			variant: i,
+			size: a
+		}), u && "!transition-none !animation-none", {
+			success: "!bg-emerald-500 !border-emerald-500 !text-white",
+			error: "!bg-red-500 !border-red-500 !text-white",
+			idle: "",
+			loading: ""
+		}[c], r),
+		disabled: b,
+		"aria-disabled": b,
+		"aria-busy": x || void 0,
+		"aria-label": x ? s : v["aria-label"],
+		onClick: w,
+		style: {
+			...C,
+			...g
 		},
-		direction: {
-			left: "left-1 w-[25%] group-hover:w-[calc(100%-8px)]",
-			right: "right-1 w-[25%] group-hover:w-[calc(100%-8px)] flex-row-reverse"
-		},
-		size: {
-			default: "rounded-xl",
-			sm: "rounded-lg top-[3px] h-[calc(100%-6px)] left-[3px] group-hover:w-[calc(100%-6px)]",
-			lg: "rounded-2xl top-[5px] h-[calc(100%-10px)] left-[5px] group-hover:w-[calc(100%-10px)]",
-			full: "rounded-xl"
-		}
-	},
-	defaultVariants: {
-		variant: "default",
-		direction: "left",
-		size: "default"
-	}
-}), He = e.forwardRef(({ className: e, variant: t, size: n, color: r, direction: i = "left", animated: a = !0, children: o, ...s }, c) => {
-	let l = { backgroundColor: r || (t === "destructive" ? "#ef4444" : t === "default" ? "#4ade80" : void 0) }, u = i === "right" ? "scale-x-[-1]" : "", d = a && !["outline", "ghost"].includes(t || "");
-	return /* @__PURE__ */ (0, $.jsxs)("button", {
-		className: Le(Be({
-			variant: t,
-			size: n,
-			className: e
-		})),
-		ref: c,
-		...s,
-		children: [d && /* @__PURE__ */ (0, $.jsx)("div", {
-			className: Le(Ve({
-				variant: t,
-				direction: i,
-				size: n
-			})),
-			style: r || t === "default" || t === "destructive" ? l : {},
-			children: /* @__PURE__ */ (0, $.jsxs)("svg", {
-				xmlns: "http://www.w3.org/2000/svg",
-				viewBox: "0 0 1024 1024",
-				height: n === "sm" ? "18px" : n === "lg" ? "32px" : "25px",
-				width: n === "sm" ? "18px" : n === "lg" ? "32px" : "25px",
-				className: Le("transform transition-transform duration-500", u, "group-hover:scale-110"),
-				children: [/* @__PURE__ */ (0, $.jsx)("path", {
-					d: "M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z",
-					fill: "currentColor"
-				}), /* @__PURE__ */ (0, $.jsx)("path", {
-					d: "m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z",
-					fill: "currentColor"
-				})]
+		...v,
+		children: [
+			o && /* @__PURE__ */ t(Le, {}),
+			!o && S && /* @__PURE__ */ t(Re, { state: c }),
+			!o && !S && d && /* @__PURE__ */ t("span", {
+				className: "btnx-icon-left",
+				"aria-hidden": "true",
+				children: d
+			}),
+			o ? /* @__PURE__ */ t("span", {
+				className: "sr-only",
+				children: s
+			}) : p,
+			!o && f && /* @__PURE__ */ t("span", {
+				className: "btnx-icon-right",
+				"aria-hidden": "true",
+				children: f
 			})
-		}), /* @__PURE__ */ (0, $.jsx)("span", {
-			className: Le("relative z-20 flex items-center justify-center transition-transform duration-500", d ? i === "left" ? "translate-x-3 group-hover:translate-x-0" : "-translate-x-3 group-hover:translate-x-0" : ""),
-			children: o
-		})]
+		]
 	});
 });
-He.displayName = "Button";
+Be.displayName = "Button";
 //#endregion
-export { He as Button };
+export { Be as Button, Ie as buttonVariants, Ne as cn };
+
+//# sourceMappingURL=index.es.js.map
