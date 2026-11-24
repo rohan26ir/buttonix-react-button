@@ -1,22 +1,23 @@
 "use client";
 import * as e from "react";
 import { jsx as t, jsxs as n } from "react/jsx-runtime";
-//#region node_modules/clsx/dist/clsx.mjs
+// node_modules/clsx/dist/clsx.mjs
 function r(e) {
 	var t, n, i = "";
 	if (typeof e == "string" || typeof e == "number") i += e;
-	else if (typeof e == "object") if (Array.isArray(e)) {
-		var a = e.length;
-		for (t = 0; t < a; t++) e[t] && (n = r(e[t])) && (i && (i += " "), i += n);
-	} else for (n in e) e[n] && (i && (i += " "), i += n);
+	else if (typeof e == "object") {
+		if (Array.isArray(e)) {
+			var a = e.length;
+			for (t = 0; t < a; t++) e[t] && (n = r(e[t])) && (i && (i += " "), i += n);
+		} else for (n in e) e[n] && (i && (i += " "), i += n);
+	}
 	return i;
 }
 function i() {
 	for (var e, t, n = 0, i = "", a = arguments.length; n < a; n++) (e = arguments[n]) && (t = r(e)) && (i && (i += " "), i += t);
 	return i;
 }
-//#endregion
-//#region node_modules/tailwind-merge/dist/bundle-mjs.mjs
+// node_modules/tailwind-merge/dist/bundle-mjs.mjs
 var a = (e, t) => {
 	let n = Array(e.length + t.length);
 	for (let t = 0; t < e.length; t++) n[t] = e[t];
@@ -79,24 +80,12 @@ var a = (e, t) => {
 		_(i, t, n, r);
 	}
 }, _ = (e, t, n, r) => {
-	if (typeof e == "string") {
-		v(e, t, n);
-		return;
-	}
-	if (typeof e == "function") {
-		y(e, t, n, r);
-		return;
-	}
-	b(e, t, n, r);
+	typeof e == "string" ? v(e, t, n) : typeof e == "function" ? y(e, t, n, r) : b(e, t, n, r);
 }, v = (e, t, n) => {
 	let r = e === "" ? t : x(t, e);
 	r.classGroupId = n;
 }, y = (e, t, n, r) => {
-	if (S(e)) {
-		g(e(r), t, n, r);
-		return;
-	}
-	t.validators === null && (t.validators = []), t.validators.push(o(n, e));
+	S(e) ? g(e(r), t, n, r) : (t.validators === null && (t.validators = []), t.validators.push(o(n, e)));
 }, b = (e, t, n, r) => {
 	let i = Object.entries(e), a = i.length;
 	for (let e = 0; e < a; e++) {
@@ -205,11 +194,7 @@ var a = (e, t) => {
 			e && e !== g && (g = e, h = !1);
 		} else g = r(p);
 		if (!g) {
-			if (!h) {
-				l = t + (l.length > 0 ? " " + l : l);
-				continue;
-			}
-			if (g = r(p), !g) {
+			if (!h || (g = r(p), !g)) {
 				l = t + (l.length > 0 ? " " + l : l);
 				continue;
 			}
@@ -1728,13 +1713,11 @@ var a = (e, t) => {
 		]
 	};
 });
-//#endregion
-//#region src/utils.ts
+// src/utils.ts
 function Ne(...e) {
 	return Me(i(e));
 }
-//#endregion
-//#region node_modules/class-variance-authority/dist/index.mjs
+// node_modules/class-variance-authority/dist/index.mjs
 var Pe = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, Fe = i, Ie = ((e, t) => (n) => {
 	if (t?.variants == null) return Fe(e, n?.class, n?.className);
 	let { variants: r, defaultVariants: i } = t, a = Object.keys(r).map((e) => {
@@ -1763,136 +1746,31 @@ var Pe = (e) => typeof e == "boolean" ? `${e}` : e === 0 ? "0" : e, Fe = i, Ie =
 			r
 		] : e;
 	}, []), n?.class, n?.className);
-})([
-	"inline-flex items-center justify-center gap-2 whitespace-nowrap",
-	"font-semibold select-none",
-	"rounded-lg",
-	"transition-all duration-200 ease-out",
-	"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-current",
-	"disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed",
-	"[aria-busy=true]:cursor-wait",
-	"motion-safe:transition-all motion-reduce:transition-none"
-].join(" "), {
+})("inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold select-none rounded-lg transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-current disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [aria-busy=true]:cursor-wait motion-safe:transition-all motion-reduce:transition-none", {
 	variants: {
 		variant: {
-			solid: [
-				"bg-indigo-600 text-white shadow-sm",
-				"hover:bg-indigo-700 hover:shadow-md hover:-translate-y-px",
-				"active:translate-y-0 active:shadow-sm"
-			].join(" "),
-			outline: [
-				"border-2 border-indigo-600 text-indigo-600 bg-transparent",
-				"hover:bg-indigo-600 hover:text-white",
-				"active:bg-indigo-700"
-			].join(" "),
-			ghost: [
-				"bg-transparent text-indigo-600",
-				"hover:bg-indigo-50 hover:text-indigo-700",
-				"active:bg-indigo-100"
-			].join(" "),
-			soft: [
-				"bg-indigo-100 text-indigo-700",
-				"hover:bg-indigo-200 hover:text-indigo-800",
-				"active:bg-indigo-300"
-			].join(" "),
-			destructive: [
-				"bg-red-600 text-white shadow-sm",
-				"hover:bg-red-700 hover:shadow-md",
-				"active:bg-red-800 active:shadow-sm"
-			].join(" "),
-			gradient: [
-				"bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-md",
-				"hover:shadow-lg hover:-translate-y-0.5 hover:brightness-110",
-				"active:translate-y-0 active:brightness-100"
-			].join(" "),
-			"gradient-shift": [
-				"btnx-gradient-shift text-white shadow-md",
-				"hover:shadow-lg hover:-translate-y-0.5",
-				"active:translate-y-0"
-			].join(" "),
-			glass: [
-				"bg-white/20 backdrop-blur-md border border-white/30 text-white",
-				"shadow-[0_4px_30px_rgba(0,0,0,0.15)]",
-				"hover:bg-white/30 hover:border-white/50 hover:shadow-[0_8px_32px_rgba(0,0,0,0.2)]",
-				"active:bg-white/15"
-			].join(" "),
-			neumorphic: [
-				"bg-[#e0e5ec] text-gray-600",
-				"shadow-[6px_6px_12px_rgba(163,177,198,0.6),-6px_-6px_12px_rgba(255,255,255,0.8)]",
-				"hover:shadow-[8px_8px_16px_rgba(163,177,198,0.7),-8px_-8px_16px_rgba(255,255,255,0.9)]",
-				"active:shadow-[inset_4px_4px_8px_rgba(163,177,198,0.6),inset_-4px_-4px_8px_rgba(255,255,255,0.8)]"
-			].join(" "),
-			shimmer: [
-				"btnx-shimmer bg-indigo-600 text-white shadow-md overflow-hidden",
-				"hover:shadow-lg hover:-translate-y-0.5",
-				"active:translate-y-0"
-			].join(" "),
-			"border-beam": [
-				"btnx-border-beam bg-transparent text-indigo-600 relative overflow-hidden",
-				"hover:text-white",
-				"active:brightness-90"
-			].join(" "),
-			glow: [
-				"bg-indigo-600 text-white",
-				"shadow-[0_0_0_0_rgba(99,102,241,0.4)]",
-				"hover:shadow-[0_0_20px_8px_rgba(99,102,241,0.5)] hover:-translate-y-0.5",
-				"active:translate-y-0 active:shadow-[0_0_10px_4px_rgba(99,102,241,0.4)]"
-			].join(" "),
-			magnetic: [
-				"bg-gray-900 text-white shadow-md",
-				"hover:shadow-xl hover:-translate-y-1.5 hover:scale-105",
-				"active:translate-y-0 active:scale-100 active:shadow-md"
-			].join(" "),
-			ripple: [
-				"btnx-ripple bg-indigo-600 text-white shadow-sm relative overflow-hidden",
-				"hover:bg-indigo-700",
-				"active:scale-95"
-			].join(" "),
-			bounce: [
-				"bg-emerald-500 text-white shadow-md",
-				"hover:animate-none hover:bg-emerald-600 hover:-translate-y-1",
-				"active:translate-y-0",
-				"btnx-bounce"
-			].join(" "),
-			jelly: [
-				"bg-violet-500 text-white shadow-md",
-				"btnx-jelly",
-				"active:scale-95"
-			].join(" "),
-			"slide-fill": [
-				"btnx-slide-fill border-2 border-indigo-600 text-indigo-600 relative overflow-hidden",
-				"hover:text-white",
-				"active:brightness-90"
-			].join(" "),
-			"underline-reveal": [
-				"bg-transparent text-gray-800 relative",
-				"btnx-underline-reveal",
-				"hover:text-indigo-600",
-				"active:text-indigo-800"
-			].join(" "),
-			"split-reveal": [
-				"btnx-split-reveal bg-indigo-600 text-white shadow-md relative overflow-hidden",
-				"hover:shadow-lg",
-				"active:scale-95"
-			].join(" "),
-			"3d-press": [
-				"bg-indigo-600 text-white",
-				"shadow-[0_6px_0_rgba(55,48,163,1)] border border-indigo-700",
-				"hover:shadow-[0_4px_0_rgba(55,48,163,1)] hover:translate-y-0.5",
-				"active:shadow-[0_2px_0_rgba(55,48,163,1)] active:translate-y-1"
-			].join(" "),
-			neon: [
-				"bg-black text-cyan-400 border border-cyan-400",
-				"shadow-[0_0_6px_0_rgba(34,211,238,0.3),inset_0_0_6px_0_rgba(34,211,238,0.1)]",
-				"hover:text-black hover:bg-cyan-400",
-				"hover:shadow-[0_0_20px_6px_rgba(34,211,238,0.6),inset_0_0_12px_0_rgba(34,211,238,0.2)]",
-				"active:scale-95"
-			].join(" "),
-			aurora: [
-				"btnx-aurora text-white shadow-lg relative overflow-hidden",
-				"hover:shadow-xl hover:-translate-y-0.5 hover:brightness-110",
-				"active:translate-y-0 active:brightness-100"
-			].join(" ")
+			solid: "bg-indigo-600 text-white shadow-sm hover:bg-indigo-700 hover:shadow-md hover:-translate-y-px active:translate-y-0 active:shadow-sm",
+			outline: "border-2 border-indigo-600 text-indigo-600 bg-transparent hover:bg-indigo-600 hover:text-white active:bg-indigo-700",
+			ghost: "bg-transparent text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 active:bg-indigo-100",
+			soft: "bg-indigo-100 text-indigo-700 hover:bg-indigo-200 hover:text-indigo-800 active:bg-indigo-300",
+			destructive: "bg-red-600 text-white shadow-sm hover:bg-red-700 hover:shadow-md active:bg-red-800 active:shadow-sm",
+			gradient: "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:brightness-100",
+			"gradient-shift": "btnx-gradient-shift text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0",
+			glass: "bg-white/20 backdrop-blur-md border border-white/30 text-white shadow-[0_4px_30px_rgba(0,0,0,0.15)] hover:bg-white/30 hover:border-white/50 hover:shadow-[0_8px_32px_rgba(0,0,0,0.2)] active:bg-white/15",
+			neumorphic: "bg-[#e0e5ec] text-gray-600 shadow-[6px_6px_12px_rgba(163,177,198,0.6),-6px_-6px_12px_rgba(255,255,255,0.8)] hover:shadow-[8px_8px_16px_rgba(163,177,198,0.7),-8px_-8px_16px_rgba(255,255,255,0.9)] active:shadow-[inset_4px_4px_8px_rgba(163,177,198,0.6),inset_-4px_-4px_8px_rgba(255,255,255,0.8)]",
+			shimmer: "btnx-shimmer bg-indigo-600 text-white shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0",
+			"border-beam": "btnx-border-beam bg-transparent text-indigo-600 relative overflow-hidden hover:text-white active:brightness-90",
+			glow: "bg-indigo-600 text-white shadow-[0_0_0_0_rgba(99,102,241,0.4)] hover:shadow-[0_0_20px_8px_rgba(99,102,241,0.5)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-[0_0_10px_4px_rgba(99,102,241,0.4)]",
+			magnetic: "bg-gray-900 text-white shadow-md hover:shadow-xl hover:-translate-y-1.5 hover:scale-105 active:translate-y-0 active:scale-100 active:shadow-md",
+			ripple: "btnx-ripple bg-indigo-600 text-white shadow-sm relative overflow-hidden hover:bg-indigo-700 active:scale-95",
+			bounce: "bg-emerald-500 text-white shadow-md hover:animate-none hover:bg-emerald-600 hover:-translate-y-1 active:translate-y-0 btnx-bounce",
+			jelly: "bg-violet-500 text-white shadow-md btnx-jelly active:scale-95",
+			"slide-fill": "btnx-slide-fill border-2 border-indigo-600 text-indigo-600 relative overflow-hidden hover:text-white active:brightness-90",
+			"underline-reveal": "bg-transparent text-gray-800 relative btnx-underline-reveal hover:text-indigo-600 active:text-indigo-800",
+			"split-reveal": "btnx-split-reveal bg-indigo-600 text-white shadow-md relative overflow-hidden hover:shadow-lg active:scale-95",
+			"3d-press": "bg-indigo-600 text-white shadow-[0_6px_0_rgba(55,48,163,1)] border border-indigo-700 hover:shadow-[0_4px_0_rgba(55,48,163,1)] hover:translate-y-0.5 active:shadow-[0_2px_0_rgba(55,48,163,1)] active:translate-y-1",
+			neon: "bg-black text-cyan-400 border border-cyan-400 shadow-[0_0_6px_0_rgba(34,211,238,0.3),inset_0_0_6px_0_rgba(34,211,238,0.1)] hover:text-black hover:bg-cyan-400 hover:shadow-[0_0_20px_6px_rgba(34,211,238,0.6),inset_0_0_12px_0_rgba(34,211,238,0.2)] active:scale-95",
+			aurora: "btnx-aurora text-white shadow-lg relative overflow-hidden hover:shadow-xl hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 active:brightness-100"
 		},
 		size: {
 			xs: "h-7 px-3 text-xs rounded-md gap-1",
@@ -2002,7 +1880,6 @@ var Be = e.forwardRef(({ className: r, variant: i = "solid", size: a = "default"
 	});
 });
 Be.displayName = "Button";
-//#endregion
 export { Be as Button, Ie as buttonVariants, Ne as cn };
 
 //# sourceMappingURL=index.es.js.map
