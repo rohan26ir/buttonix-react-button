@@ -22,6 +22,7 @@ export default defineConfig({
       name: "Buttonix",
       formats: ["es", "umd"],
       fileName: (format) => `index.${format}.js`,
+      cssFileName: "style",
     },
     rollupOptions: {
       // Keep React as external — consumers supply their own
